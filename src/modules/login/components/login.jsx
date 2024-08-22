@@ -5,6 +5,7 @@ import { doc, setDoc, getDoc } from 'firebase/firestore'; // Firestore methods
 import { onAuthStateChanged, getIdToken } from 'firebase/auth';
 import { UserData } from '../../../utils/userData';
 import { useNavigate } from "react-router-dom";
+import SignUpForm from '../../SignUp/signUp';
 import './login.css'; 
 
 const AuthPage = () => {
@@ -72,55 +73,34 @@ const AuthPage = () => {
 
     return (
         <div className="auth-page">
-            <h2>{isRegistering ? 'Register' : 'Login'}</h2>
-            <form onSubmit={handleSubmit}>
+            {isRegistering ? (
+                <SignUpForm />
+            ) : (
                 <div>
-                    <label>Email</label>
-                    <input
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                    />
-                </div>
-                <div>
-                    <label>Password</label>
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
-                </div>
-                {isRegistering && (
-                    <div>
-                        <label>Role</label>
+                    <h2>Login</h2>
+                    <form onSubmit={handleSubmit}>
                         <div>
-                            <label>
-                                <input
-                                    type="radio"
-                                    value="patient"
-                                    checked={role === 'patient'}
-                                    onChange={(e) => setRole(e.target.value)}
-                                />
-                                Patient
-                            </label>
-                            <label>
-                                <input
-                                    type="radio"
-                                    value="doctor"
-                                    checked={role === 'doctor'}
-                                    onChange={(e) => setRole(e.target.value)}
-                                />
-                                Doctor
-                            </label>
+                            <label>Email</label>
+                            <input
+                                type="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                required
+                            />
                         </div>
-                    </div>
-                )}
-                <button type="submit">
-                    {isRegistering ? 'Register' : 'Login'}
-                </button>
-            </form>
+                        <div>
+                            <label>Password</label>
+                            <input
+                                type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <button type="submit">Login</button>
+                    </form>
+                </div>
+            )}
             <button type="button" onClick={() => setIsRegistering(!isRegistering)}>
                 {isRegistering ? 'Already have an account? Login' : 'Don\'t have an account? Register'}
             </button>

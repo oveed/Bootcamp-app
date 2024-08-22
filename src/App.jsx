@@ -7,11 +7,13 @@ import Header from "./modules/header/header";
 import Footer from './modules/footer/footer';
 import './App.css';
 import DoctorList from './modules/docList/docList';
+import UserProfile from './modules/profile/components/userProfile';
 
 function App() {
   return (
     <div className="App">
       <Header />
+      <UserProfile/>
       <Routes>
         <Route path="/home" exact element={<Home />} />
         <Route path="/login" exact element={<AuthPage />} />

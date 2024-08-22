@@ -69,6 +69,12 @@ button:hover {
 
 button[type="button"] {
     background-color: #6c757d;
+    padding: 10px 0;
+    margin-top: 10px;
+    font-size: 14px;
+    width : 400px;
+    height: 40px;
+    font-size: medium;
 }
 
 button[type="button"]:hover {
@@ -76,11 +82,14 @@ button[type="button"]:hover {
 }
 
 .auth-page .toggle-btn {
-    margin-top: 15px;
     font-size: 14px;
     color: #007bff;
     cursor: pointer;
     border: none;
     background: none;
     padding: 0;
+    margin-top: 15px;
+    display: block;
+    text-align: center;
+    width: 100%;
 }
