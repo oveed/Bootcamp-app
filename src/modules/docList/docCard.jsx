@@ -7,8 +7,8 @@ function DoctorCard({ name, specialization, description, age, id }) {
     console.log("iddddddddddddddd", id)
     navigate('/calendar', {
       state: {
-        doctorId: id,  // Pass the doctor ID
-        isDoctor: false  // Set to false since this is for viewing a doctor's schedule
+        doctorId: id,
+        isDoctor: true
       }
     });
   }

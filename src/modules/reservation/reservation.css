@@ -1,0 +1,6 @@
+.disabled-event {
+    pointer-events: none;
+    /* Disables interaction */
+    opacity: 0.6;
+    /* Makes it look disabled */
+}

@@ -35,6 +35,7 @@ export default class DemoApp extends React.Component {
                 : appointments.filter(app => app.userId === this.props.doctorId);
 
             this.setState({ currentApps: filteredAppointments });
+            console.log("filtered events", filteredAppointments)
         } catch (error) {
             console.error("Error fetching appointments: ", error);
         }
@@ -67,9 +68,10 @@ export default class DemoApp extends React.Component {
                         dayMaxEvents={true}
                         weekends={this.state.weekendsVisible}
                         resources={RESOURCES}
+                        eventClassNames={(eventInfo) => this.getEventClassNames(this.props.isDoctor)}
                         events={this.state.currentApps}
                         select={this.handleDateSelect}
-                        eventContent={renderEventContent}
+                        eventContent={(eventInfo) => renderEventContent(eventInfo, this.props.isDoctor)}
                         eventClick={this.handleEventClick}
                         eventsSet={this.handleEvents}
                     />
@@ -98,6 +100,19 @@ export default class DemoApp extends React.Component {
     };
 
     handleDateSelect = async (selectInfo) => {
+
+
+        const overlappingEvent = this.state.currentApps.find(event => {
+            return (
+                selectInfo.start < new Date(event.end) && new Date(event.start) < selectInfo.end
+            );
+        });
+
+        if (overlappingEvent) {
+            alert('This time slot is already booked.');
+            return;
+        }
+
         let title = prompt('Please enter a new title for your event');
         let calendarApi = selectInfo.view.calendar;
 
@@ -116,8 +131,9 @@ export default class DemoApp extends React.Component {
                 start: selectInfo.startStr,
                 end: selectInfo.endStr,
                 resourceId: selectInfo.resource ? selectInfo.resource.id : null,
-                userId: this.user.uid
+                userId: this.props.isDoctor ? this.user.uid : this.props.doctorId  // Adjusting the userId based on whether the user is a doctor or patient
             };
+
 
             try {
                 // Add the event to Firestore
@@ -130,19 +146,25 @@ export default class DemoApp extends React.Component {
         }
     };
 
-    handleEventClick = async (clickInfo) => {
-        if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
-            const eventId = clickInfo.event.id;
-            clickInfo.event.remove();
 
-            try {
-                // Remove the event from Firestore
-                await deleteDoc(doc(db, "events", eventId));
-            } catch (e) {
-                console.error("Error removing document: ", e);
+    handleEventClick = async (clickInfo) => {
+        if (this.props.isDoctor) {
+            if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
+                const eventId = clickInfo.event.id;
+                clickInfo.event.remove();
+
+                try {
+                    // Remove the event from Firestore
+                    await deleteDoc(doc(db, "events", eventId));
+                } catch (e) {
+                    console.error("Error removing document: ", e);
+                }
             }
+        } else {
+            alert('You cannot modify this appointment.');
         }
     };
+
     func
     handleEvents = (events) => {
         // Compare the new events with the current state to prevent unnecessary updates
@@ -157,21 +179,25 @@ export default class DemoApp extends React.Component {
         }
     };
     ;
-
+    getEventClassNames(prob) {
+        return !prob ? 'disabled-event' : ''; // Add a 'disabled-event' class for patients
+    }
     handlePrint = () => {
         window.print();
     };
 
 }
 
-function renderEventContent(eventInfo) {
+function renderEventContent(eventInfo, isDoctor) {
+    const isPatient = !isDoctor;
     return (
         <>
-            <b>{eventInfo.timeText}</b>
-            {" "}<i>{'    '}{eventInfo.event.title}</i>
+            <b style={{ opacity: isPatient ? '0.5' : '1' }}>{eventInfo.timeText}</b>
+            {" "}<i style={{ opacity: isPatient ? '0.5' : '1' }}>{'    '} {isPatient ? '' : eventInfo.event.title}</i>
         </>
     );
 }
+
 
 function renderSidebarEvent(event) {
     return (
