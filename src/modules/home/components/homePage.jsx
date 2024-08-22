@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
-
+import { Navigate, useNavigate } from 'react-router-dom';
 function Home() {
+    const navigate = useNavigate();
+    const handleClick = () => {
+        navigate("/profile")
+    }
     useEffect(() => {
         const storedUser = localStorage.getItem('user');
         const storedToken = localStorage.getItem('token');
@@ -16,7 +20,7 @@ function Home() {
     return (
         <div>
             <h1>Hello</h1>
-            {/* Form for user login */}
+            <button onClick={handleClick}>Profile</button>
         </div>
 
     );
