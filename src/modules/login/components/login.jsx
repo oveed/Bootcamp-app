@@ -1,17 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { auth, db } from '../../../utils/firebaseConfig'; // Add Firestore db import
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
-import { doc, setDoc, getDoc } from 'firebase/firestore'; // Firestore methods
+import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore'; // Firestore methods
 import { onAuthStateChanged, getIdToken } from 'firebase/auth';
 import { UserData } from '../../../utils/userData';
 import { useNavigate } from "react-router-dom";
-import SignUpForm from '../../SignUp/signUp';
 import './login.css'; 
 
 const AuthPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [role, setRole] = useState(''); 
+    const [role, setRole] = useState('');
+    const [fullName, setFullName] = useState('');
+    const [age, setAge] = useState('');
+    const [specialty, setSpecialty] = useState('');
+    const [description, setDescription] = useState('');
+
     const [isRegistering, setIsRegistering] = useState(false);
     const navigate = useNavigate();
 
@@ -25,21 +29,43 @@ const AuthPage = () => {
                     return;
                 }
 
-                // Register the user
                 userCredential = await createUserWithEmailAndPassword(auth, email, password);
 
-                // Store user data in Firestore
-                await setDoc(doc(db, 'users', userCredential.user.uid), {
-                    email: email,
-                    role: role,
-                });
-                localStorage.setItem('user', JSON.stringify({
-                    email: email,
-                    role: role,
-                    uid: userCredential.user.uid,
-                }));
+                if (role === 'doctor') {
+                    await setDoc(doc(db, 'users', userCredential.user.uid), {
+                        email: email,
+                        role: role,
+                        fullName: fullName,
+                        age: age,
+                        specialty: specialty,
+                        description: description || '',
+                        createdAt: serverTimestamp(),
+                    });
+
+                    localStorage.setItem('user', JSON.stringify({
+                        email: email,
+                        role: role,
+                        uid: userCredential.user.uid,
+                        fullName: fullName,
+                        age: age,
+                        specialty: specialty,
+                        description: description || '',
+                    }));
+                } else {
+                    await setDoc(doc(db, 'users', userCredential.user.uid), {
+                        email: email,
+                        role: role,
+                    });
+
+                    localStorage.setItem('user', JSON.stringify({
+                        email: email,
+                        role: role,
+                        uid: userCredential.user.uid,
+                    }));
+                }
+
                 alert("User registered successfully");
-                navigate("/");
+                navigate("/home");
             } else {
                 // Login the user
                 userCredential = await signInWithEmailAndPassword(auth, email, password);
@@ -53,9 +79,10 @@ const AuthPage = () => {
                     localStorage.setItem('user', JSON.stringify({
                         email: email,
                         role: userData.role,
+
                         uid: userCredential.user.uid,
                     }));
-                    navigate("/");
+                    navigate("/home");
                 } else {
                     alert("No such user found in Firestore");
                 }
@@ -73,34 +100,55 @@ const AuthPage = () => {
 
     return (
         <div className="auth-page">
-            {isRegistering ? (
-                <SignUpForm />
-            ) : (
+            <h2>{isRegistering ? 'Register' : 'Login'}</h2>
+            <form onSubmit={handleSubmit}>
                 <div>
-                    <h2>Login</h2>
-                    <form onSubmit={handleSubmit}>
-                        <div>
-                            <label>Email</label>
-                            <input
-                                type="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                required
-                            />
-                        </div>
-                        <div>
-                            <label>Password</label>
-                            <input
-                                type="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                required
-                            />
-                        </div>
-                        <button type="submit">Login</button>
-                    </form>
+                    <label>Email</label>
+                    <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
                 </div>
-            )}
+                <div>
+                    <label>Password</label>
+                    <input
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
+                </div>
+                {isRegistering && (
+                    <div>
+                        <label>Role</label>
+                        <div>
+                            <label>
+                                <input
+                                    type="radio"
+                                    value="patient"
+                                    checked={role === 'patient'}
+                                    onChange={(e) => setRole(e.target.value)}
+                                />
+                                Patient
+                            </label>
+                            <label>
+                                <input
+                                    type="radio"
+                                    value="doctor"
+                                    checked={role === 'doctor'}
+                                    onChange={(e) => setRole(e.target.value)}
+                                />
+                                Doctor
+                            </label>
+                        </div>
+                    </div>
+                )}
+                <button type="submit">
+                    {isRegistering ? 'Register' : 'Login'}
+                </button>
+            </form>
             <button type="button" onClick={() => setIsRegistering(!isRegistering)}>
                 {isRegistering ? 'Already have an account? Login' : 'Don\'t have an account? Register'}
             </button>

@@ -1,5 +1,5 @@
 import React from 'react';
-import './HomePage.css'; 
+import './HomePage.css';
 import { Link } from 'react-router-dom';
 
 function HomePage() {
@@ -36,7 +36,7 @@ function HomePage() {
         <h2>About Us</h2>
         <p>TherapyHub is dedicated to providing accessible mental health support and resources. Our team of experienced professionals is here to help you on your journey to well-being.</p>
       </section>
-      
+
     </div>
   );
 }
