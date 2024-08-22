@@ -1,0 +1,23 @@
+.doctor-list {
+    padding: 20px;
+    background-color: #f4f4f4;
+  }
+  
+  .doctor-list h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .doctor-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .doctor-card {
+    flex: 1 1 calc(33.333% - 40px);
+    max-width: calc(33.333% - 40px);
+    margin: 10px;
+  }
+  

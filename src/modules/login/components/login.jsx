@@ -5,11 +5,12 @@ import { doc, setDoc, getDoc } from 'firebase/firestore'; // Firestore methods
 import { onAuthStateChanged, getIdToken } from 'firebase/auth';
 import { UserData } from '../../../utils/userData';
 import { useNavigate } from "react-router-dom";
+import './login.css';
 
 const AuthPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [role, setRole] = useState(''); // New state for role
+    const [role, setRole] = useState('');
     const [isRegistering, setIsRegistering] = useState(false);
     const navigate = useNavigate();
 
@@ -70,7 +71,7 @@ const AuthPage = () => {
     };
 
     return (
-        <div>
+        <div className="auth-page">
             <h2>{isRegistering ? 'Register' : 'Login'}</h2>
             <form onSubmit={handleSubmit}>
                 <div>
@@ -120,7 +121,7 @@ const AuthPage = () => {
                     {isRegistering ? 'Register' : 'Login'}
                 </button>
             </form>
-            <button onClick={() => setIsRegistering(!isRegistering)}>
+            <button type="button" onClick={() => setIsRegistering(!isRegistering)}>
                 {isRegistering ? 'Already have an account? Login' : 'Don\'t have an account? Register'}
             </button>
         </div>
