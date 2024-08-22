@@ -1,15 +1,17 @@
-// src/AuthPage.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { auth, db } from '../../../utils/firebaseConfig'; // Add Firestore db import
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc, getDoc } from 'firebase/firestore'; // Firestore methods
 import { onAuthStateChanged, getIdToken } from 'firebase/auth';
+import { UserData } from '../../../utils/userData';
+import { useNavigate } from "react-router-dom";
 
 const AuthPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [role, setRole] = useState(''); // New state for role
     const [isRegistering, setIsRegistering] = useState(false);
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -35,7 +37,7 @@ const AuthPage = () => {
                     uid: userCredential.user.uid,
                 }));
                 alert("User registered successfully");
-
+                navigate("/");
             } else {
                 // Login the user
                 userCredential = await signInWithEmailAndPassword(auth, email, password);
@@ -51,6 +53,7 @@ const AuthPage = () => {
                         role: userData.role,
                         uid: userCredential.user.uid,
                     }));
+                    navigate("/");
                 } else {
                     alert("No such user found in Firestore");
                 }
@@ -65,7 +68,6 @@ const AuthPage = () => {
             alert(error.message);
         }
     };
-
 
     return (
         <div>
