@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { auth, db } from '../../../utils/firebaseConfig'; // Add Firestore db import
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc, getDoc } from 'firebase/firestore'; // Firestore methods
 import { onAuthStateChanged, getIdToken } from 'firebase/auth';
 import { UserData } from '../../../utils/userData';
 import { useNavigate } from "react-router-dom";
-import './login.css'; 
+import './login.css';
 
 const AuthPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [role, setRole] = useState(''); 
+    const [role, setRole] = useState('');
     const [isRegistering, setIsRegistering] = useState(false);
     const navigate = useNavigate();
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import { React, useState } from 'react'
 import { Route, Routes } from "react-router-dom";
 import AuthPage from './modules/login/components/login';
 import Home from './modules/home/components/homePage';
@@ -14,10 +14,10 @@ function App() {
       <Header />
       <Routes>
         <Route path="/home" exact element={<Home />} />
-        <Route path="/login" exact element={<AuthPage />} />
-        <Route path="/docList" exact element={<DoctorList/>} />
+        <Route path="/login" exact element={<PrivateRoute><AuthPage /></PrivateRoute>} />
+        <Route path="/docList" exact element={<PrivateRoute><DoctorList /></PrivateRoute>} />
       </Routes>
-      <Footer/>
+      <Footer />
     </div>
   );
 }
