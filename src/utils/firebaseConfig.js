@@ -1,6 +1,9 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
+import { getAuth } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
+
 const firebaseConfig = {
   apiKey: "AIzaSyAF_X-Q301A3CAwkwJ-WxjaTIL9qNVX3ws",
   authDomain: "bootcamp-app-5d1fb.firebaseapp.com",
@@ -12,6 +15,7 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-
-export { app, analytics };
+// const analytics = getAnalytics(app);
+const auth = getAuth(app);
+const db = getFirestore(app);
+export { app, auth, db };
