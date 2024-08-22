@@ -1,28 +1,44 @@
-import React, { useState, useEffect } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
-function Home() {
-    const navigate = useNavigate();
-    const handleClick = () => {
-        navigate("/profile")
-    }
-    useEffect(() => {
-        const storedUser = localStorage.getItem('user');
-        const storedToken = localStorage.getItem('token');
+import React from 'react';
+import './HomePage.css';
+import { Link } from 'react-router-dom';
 
-        if (storedUser && storedToken) {
-            const userData = JSON.parse(storedUser);
-            console.log("User is already logged in:", userData.email);
-            console.log("User role:", userData.role);
-        } else {
-            console.log("No user logged in");
-        }
-    }, []);
-    return (
-        <div>
-            <h1>Hello</h1>
-            <button onClick={handleClick}>Profile</button>
+function HomePage() {
+  return (
+    <div className="home-page">
+
+      <div className="hero">
+        <div className="hero-content">
+          <h1>Welcome to TherapyHub</h1>
+          <p className="quote" >"Taking care of your mental health is just as important as taking care of your physical health."</p>
+          <Link to="/login" className="cta-button">Get In Touch</Link>
         </div>
+      </div>
 
-    );
+      <section className="features">
+        <h2>Our Features</h2>
+        <div className="feature-list">
+          <div className="feature-item">
+            <h3>Personalized Support</h3>
+            <p>Get tailored mental health support from professionals.</p>
+          </div>
+          <div className="feature-item">
+            <h3>Online Appointments</h3>
+            <p>Schedule sessions with ease through our online booking system.</p>
+          </div>
+          <div className="feature-item">
+            <h3>24/7 Accessibility</h3>
+            <p>Access mental health resources anytime, anywhere.</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="about">
+        <h2>About Us</h2>
+        <p>TherapyHub is dedicated to providing accessible mental health support and resources. Our team of experienced professionals is here to help you on your journey to well-being.</p>
+      </section>
+
+    </div>
+  );
 }
-export default Home
+
+export default HomePage;

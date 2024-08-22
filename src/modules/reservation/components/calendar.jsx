@@ -8,7 +8,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 import resourceTimelinePlugin from '@fullcalendar/resource-timeline';
 import { collection, addDoc, getDocs, deleteDoc, doc } from 'firebase/firestore';
 import { db } from '../../../utils/firebaseConfig'; // Import your Firebase configuration
-
+import { UserData } from '../../../utils/userData';
 const RESOURCES = [
     { id: 'a', title: 'Auditorium A' },
     { id: 'b', title: 'Auditorium B', eventColor: 'green' },
@@ -18,18 +18,29 @@ function func(params) {
     console.log(params)
 }
 export default class DemoApp extends React.Component {
-
+    user = UserData()
     state = {
         weekendsVisible: true,
-        currentEvents: []
+        currentApps: []
     };
 
     async componentDidMount() {
-        // Fetch events from Firestore when component mounts
-        const querySnapshot = await getDocs(collection(db, "events"));
-        const events = querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
-        this.setState({ currentEvents: events });
+        try {
+            const querySnapshot = await getDocs(collection(db, "appointments"));
+            const appointments = querySnapshot.docs
+                .map(doc => ({ ...doc.data(), id: doc.id }));
+            console.log("this is the prob", this.props.isDoctor + " DOC ID " + this.props.doctorId)
+            const filteredAppointments = this.props.isDoctor
+                ? appointments.filter(app => app.userId === this.user.uid)
+                : appointments.filter(app => app.userId === this.props.doctorId);
+
+            this.setState({ currentApps: filteredAppointments });
+        } catch (error) {
+            console.error("Error fetching appointments: ", error);
+        }
     }
+
+
 
     render() {
         return (
@@ -56,7 +67,7 @@ export default class DemoApp extends React.Component {
                         dayMaxEvents={true}
                         weekends={this.state.weekendsVisible}
                         resources={RESOURCES}
-                        events={this.state.currentEvents} // Load events from state
+                        events={this.state.currentApps}
                         select={this.handleDateSelect}
                         eventContent={renderEventContent}
                         eventClick={this.handleEventClick}
@@ -71,9 +82,9 @@ export default class DemoApp extends React.Component {
         return (
             <div className='demo-app-sidebar'>
                 <div className='demo-app-sidebar-section'>
-                    <h2>All Events ({this.state.currentEvents.length})</h2>
+                    <h2>All Appointments ({this.state.currentApps.length})</h2>
                     <ul>
-                        {this.state.currentEvents.map(renderSidebarEvent)}
+                        {this.state.currentApps.map(renderSidebarEvent)}
                     </ul>
                 </div>
             </div>
@@ -90,24 +101,29 @@ export default class DemoApp extends React.Component {
         let title = prompt('Please enter a new title for your event');
         let calendarApi = selectInfo.view.calendar;
 
-        calendarApi.unselect(); // clear date selection
+        calendarApi.unselect();
 
         if (title) {
-            const newEvent = {
+            const newApp = {
                 title,
                 start: selectInfo.startStr,
                 end: selectInfo.endStr,
                 allDay: selectInfo.allDay,
-                resourceId: selectInfo.resource.id
+                resourceId: selectInfo.resource ? selectInfo.resource.id : null,
+            };
+            const AppToStore = {
+                title,
+                start: selectInfo.startStr,
+                end: selectInfo.endStr,
+                resourceId: selectInfo.resource ? selectInfo.resource.id : null,
+                userId: this.user.uid
             };
 
             try {
                 // Add the event to Firestore
-                const docRef = await addDoc(collection(db, "events"), newEvent);
-                newEvent.id = docRef.id;
-
-                // Add the event to FullCalendar's state
-                calendarApi.addEvent(newEvent);
+                const docRef = await addDoc(collection(db, "appointments"), AppToStore);
+                newApp.id = docRef.id;
+                calendarApi.addEvent(newApp);
             } catch (e) {
                 console.error("Error adding document: ", e);
             }
@@ -130,13 +146,13 @@ export default class DemoApp extends React.Component {
     func
     handleEvents = (events) => {
         // Compare the new events with the current state to prevent unnecessary updates
-        const currentEventIds = this.state.currentEvents.map(event => event.id);
-        const newEventIds = events.map(event => event.id);
+        const currentAppIds = this.state.currentApps.map(event => event.id);
+        const newAppIds = events.map(event => event.id);
 
         // Update state only if the events have changed
-        if (JSON.stringify(currentEventIds) !== JSON.stringify(newEventIds)) {
+        if (JSON.stringify(currentAppIds) !== JSON.stringify(newAppIds)) {
             this.setState({
-                currentEvents: events
+                currentApps: events
             });
         }
     };
@@ -151,8 +167,8 @@ export default class DemoApp extends React.Component {
 function renderEventContent(eventInfo) {
     return (
         <>
-            <b>{eventInfo.timeText}</b>{func(eventInfo)}
-            <i>{eventInfo.event.title}</i>
+            <b>{eventInfo.timeText}</b>
+            {" "}<i>{'    '}{eventInfo.event.title}</i>
         </>
     );
 }
