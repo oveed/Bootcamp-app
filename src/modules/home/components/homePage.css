@@ -7,7 +7,7 @@
 }
 
 .hero {
-  background: url('C:\Users\user\Desktop\Bootcamp-app-feat-auth\src\assets\bg.png') no-repeat center center/cover;
+  background: url('./bg.png') no-repeat center center/cover;
   height: 100vh;
   display: flex;
   flex-direction: column;
