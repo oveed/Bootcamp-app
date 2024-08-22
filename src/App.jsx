@@ -14,7 +14,7 @@ function App() {
       <Header />
       <Routes>
         <Route path="/home" exact element={<Home />} />
-        <Route path="/login" exact element={<PrivateRoute><AuthPage /></PrivateRoute>} />
+        <Route path="/login" exact element={<AuthPage />} />
         <Route path="/docList" exact element={<PrivateRoute><DoctorList /></PrivateRoute>} />
       </Routes>
       <Footer />
