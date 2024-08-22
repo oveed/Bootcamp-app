@@ -5,6 +5,7 @@ import Home from './modules/home/components/homePage';
 import PrivateRoute from "./utils/PrivateRoute";
 import './App.css'
 import ProfilePage from './modules/profile/components/Profile';
+import Calendar from './modules/reservation/components/calendar';
 function App() {
   return (
     <div className="App">
@@ -15,6 +16,9 @@ function App() {
         <Route path="/login" exact element={<AuthPage />} />
         <Route path="/profile" exact element={<PrivateRoute>
           <ProfilePage />
+        </PrivateRoute>} />
+        <Route path="/calendar" exact element={<PrivateRoute>
+          <Calendar />
         </PrivateRoute>} />
       </Routes>
     </div>
