@@ -3,6 +3,7 @@ import Calendar from "../components/calendar"
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from 'react-toastify';
 import { useParams } from 'react-router-dom';
+import UserAppointments from '../components/userAppointments';
 
 function ReservationPage() {
     const { id } = useParams();
@@ -13,6 +14,7 @@ function ReservationPage() {
     }
     return (
         <>
+            <UserAppointments />
             <Calendar isDoctor={isDoctor} doctorId={id} />
         </>
     )

@@ -26,7 +26,6 @@ function App() {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
-        dispatch(setIsDoctor());
         console.log(isDoctor)
       } else {
       }
@@ -37,7 +36,7 @@ function App() {
   }, [dispatch]);
   return (
     <div className="App">
-      <Header />
+      {/* <Header /> */}
       <Routes>
         <Route path="/home" exact element={<Home />} />
         <Route path="/login" exact element={<AuthPage />} />

@@ -56,6 +56,8 @@ const AuthPage = () => {
                     await setDoc(doc(db, 'users', userCredential.user.uid), {
                         email: email,
                         role: role,
+                        id: userCredential.user.uid,
+
                     });
 
                     localStorage.setItem('user', JSON.stringify({
