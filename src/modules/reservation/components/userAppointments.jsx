@@ -113,7 +113,7 @@ const UserAppointments = () => {
                         {appointment.meetLink ? (
                             <span style={{ marginLeft: '10px' }}>
                                 <a href={appointment.meetLink} className='meet-button'>
-                                    <button style={{ padding: '4px 8px' }}>Meeting</button>
+                                    <button style={{ padding: '4px 8px', margin: '0px' }}>Meeting</button>
                                 </a>
                             </span>
                         ) : null}
