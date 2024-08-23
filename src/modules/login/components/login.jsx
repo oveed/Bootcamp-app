@@ -65,8 +65,12 @@ const AuthPage = () => {
                 const userDoc = await getDoc(doc(db, 'users', userCredential.user.uid));
                 if (userDoc.exists()) {
                     const userData = userDoc.data();
-                    localStorage.setItem('user', JSON.stringify({ ...userData, uid: userCredential.user.uid }));
-                    alert(`User logged in successfully as ${userData.role}`);
+                    localStorage.setItem('user', JSON.stringify({
+                        email: email,
+                        role: userData.role,
+
+                        uid: userCredential.user.uid,
+                    }));
                     navigate("/home");
                 } else {
                     alert("No such user found in Firestore");

@@ -10,12 +10,12 @@ import Footer from './modules/footer/footer';
 import DoctorList from './modules/docList/docList';
 import Contact from './modules/contact/contact';
 import ChatBot from './modules/chatbot/ChatBot';
-
+import "./App.css"
 import UserProfile from './modules/profile/patient/components/userProfile';
 import DoctorProfile from './modules/profile/doctor/components/docProfile';
 import DoctorSignup from './modules/SignUp/docSignUp';
 import CalendarPage from './modules/profile/doctor/pages/DocProfilePage';
-import { setIsDoctor } from './core/UserStore';
+import { setDoctorId, setIsDoctor } from './core/UserStore';
 import { useDispatch, useSelector } from 'react-redux';
 import { auth } from './utils/firebaseConfig';
 import ReservationPage from './modules/reservation/pages/ReservationPage';
@@ -39,6 +39,7 @@ function App() {
   return (
     <div className="App">
       <Header />
+      <div className="spacing"></div>
       <Routes>
         <Route path="/home" exact element={<Home />} />
         <Route path="/login" exact element={<AuthPage />} />

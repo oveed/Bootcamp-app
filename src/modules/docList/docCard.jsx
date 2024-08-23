@@ -21,7 +21,7 @@ function DoctorCard({ name, specialization, description, age, id, picture }) {
         <p className="doctor-age">{age} years old</p>
         <p className="doctor-description">{description}</p>
         <button className="doctor-button" onClick={handleOnClick}>View Profile</button> </div>
-    </div>
+    </div >
   );
 }
 

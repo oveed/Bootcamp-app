@@ -14,12 +14,14 @@ import 'react-toastify/dist/ReactToastify.css';
 import "../reservation.css"
 const RESOURCES = [
     { id: 'a', title: 'Auditorium A' },
-    { id: 'b', title: 'Auditorium B', eventColor: 'green' },
-    { id: 'c', title: 'Auditorium C', eventColor: 'orange' },
 ];
-function func(params) {
-    console.log(params)
+
+function generateGoogleMeetLink() {
+    const segment = () => Math.random().toString(36).substring(2, 6); // Generates a 4-character segment
+    return `https://meet.google.com/${segment()}-${segment()}-${segment()}`;
 }
+
+
 export default class DemoApp extends React.Component {
     user = UserData()
     state = {
@@ -34,8 +36,8 @@ export default class DemoApp extends React.Component {
                 .map(doc => ({ ...doc.data(), id: doc.id }));
             console.log("this is the prob", this.props.isDoctor + " DOC ID " + this.props.doctorId)
             const filteredAppointments = this.props.isDoctor
-                ? appointments.filter(app => app.userId === this.user.uid)
-                : appointments.filter(app => app.userId === this.props.doctorId);
+                ? appointments.filter(app => app.doctorId === this.user.uid)
+                : appointments.filter(app => app.doctorId === this.props.doctorId);
 
             this.setState({ currentApps: filteredAppointments });
             console.log("filtered events", filteredAppointments)
@@ -80,7 +82,7 @@ export default class DemoApp extends React.Component {
                         eventsSet={this.handleEvents}
                         slotMinTime="07:00:00"
                         slotMaxTime="21:00:00"
-                        height="auto"
+                        height="300px"
                     />
                 </div>
             </div>
@@ -90,12 +92,6 @@ export default class DemoApp extends React.Component {
     renderSidebar() {
         return (
             <div className='demo-app-sidebar'>
-                <div className='demo-app-sidebar-section'>
-                    <h2>All Appointments ({this.state.currentApps.length})</h2>
-                    <ul>
-                        {this.state.currentApps.map(renderSidebarEvent)}
-                    </ul>
-                </div>
             </div>
         );
     }
@@ -135,7 +131,9 @@ export default class DemoApp extends React.Component {
             start: selectInfo.startStr,
             end: selectInfo.endStr,
             resourceId: selectInfo.resource ? selectInfo.resource.id : null,
-            userId: this.props.isDoctor ? this.user.uid : this.props.doctorId  // Adjusting the userId based on whether the user is a doctor or patient
+            doctorId: this.props.isDoctor ? this.user.uid : this.props.doctorId,
+            ...(this.props.isDoctor ? {} : { patientId: this.user.uid }),
+            ...(this.props.isDoctor ? {} : { meetLink: generateGoogleMeetLink() }),
         };
 
         try {
@@ -157,8 +155,7 @@ export default class DemoApp extends React.Component {
                 clickInfo.event.remove();
 
                 try {
-                    // Remove the event from Firestore
-                    await deleteDoc(doc(db, "events", eventId));
+                    await deleteDoc(doc(db, "appointments", eventId));
                     toast.success('Appointment deleted successfully.');
                 } catch (e) {
                     console.error("Error removing document: ", e);
@@ -196,10 +193,10 @@ export default class DemoApp extends React.Component {
 function renderEventContent(eventInfo, isDoctor) {
     const isPatient = !isDoctor;
     return (
-        <>
+        <div className="fc-event-filled">
             <b style={{ opacity: isPatient ? '0.5' : '1' }}>{eventInfo.timeText}</b>
             {" "}<i style={{ opacity: isPatient ? '0.5' : '1' }}>{'    '} {isPatient ? '' : eventInfo.event.title}</i>
-        </>
+        </div>
     );
 }
 
