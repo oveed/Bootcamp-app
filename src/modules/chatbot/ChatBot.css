@@ -8,7 +8,7 @@
   .chatbot-button {
     width: 60px;
     height: 60px;
-    background-color: #ac3a73;
+    background-color: #002538;
     border: none;
     border-radius: 50%;
     color: #fff;
@@ -22,7 +22,7 @@
   }
   
   .chatbot-button:hover {
-    background-color: #d012d6;
+    background-color: #346A74;
     transform: scale(1.1);
   }
   
