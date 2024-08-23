@@ -17,9 +17,13 @@ const RESOURCES = [
     { id: 'b', title: 'Auditorium B', eventColor: 'green' },
     { id: 'c', title: 'Auditorium C', eventColor: 'orange' },
 ];
-function func(params) {
-    console.log(params)
+
+function generateGoogleMeetLink() {
+    const segment = () => Math.random().toString(36).substring(2, 6); // Generates a 4-character segment
+    return `https://meet.google.com/${segment()}-${segment()}-${segment()}`;
 }
+
+
 export default class DemoApp extends React.Component {
     user = UserData()
     state = {
@@ -101,6 +105,7 @@ export default class DemoApp extends React.Component {
         });
     };
 
+
     handleDateSelect = async (selectInfo) => {
         const overlappingEvent = this.state.currentApps.find(event => {
             return (
@@ -124,6 +129,7 @@ export default class DemoApp extends React.Component {
             end: selectInfo.endStr,
             allDay: selectInfo.allDay,
             resourceId: selectInfo.resource ? selectInfo.resource.id : null,
+
         };
 
         const AppToStore = {
@@ -132,7 +138,7 @@ export default class DemoApp extends React.Component {
             resourceId: selectInfo.resource ? selectInfo.resource.id : null,
             doctorId: this.props.isDoctor ? this.user.uid : this.props.doctorId,
             ...(this.props.isDoctor ? {} : { patientId: this.user.uid }),
-            // docName: this.props.name,
+            ...(this.props.isDoctor ? {} : { meetLink: generateGoogleMeetLink() }),
         };
 
         try {

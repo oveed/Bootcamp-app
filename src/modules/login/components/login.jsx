@@ -70,15 +70,11 @@ const AuthPage = () => {
                 alert("User registered successfully");
                 navigate("/home");
             } else {
-                // Login the user
                 userCredential = await signInWithEmailAndPassword(auth, email, password);
 
-                // Retrieve user role from Firestore
                 const userDoc = await getDoc(doc(db, 'users', userCredential.user.uid));
                 if (userDoc.exists()) {
                     const userData = userDoc.data();
-                    alert(`User logged in successfully as ${userData.role}`);
-                    // Save user data to localStorage
                     localStorage.setItem('user', JSON.stringify({
                         email: email,
                         role: userData.role,

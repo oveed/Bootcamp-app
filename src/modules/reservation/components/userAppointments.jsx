@@ -40,6 +40,7 @@ const UserAppointments = () => {
                         ...appointmentData,
                         id: doc.id,
                         relatedUserName: relatedUserName
+
                     };
                 }));
 
@@ -101,10 +102,23 @@ const UserAppointments = () => {
                             minute: '2-digit',
                             hour12: true
                         })}</b>
-                        <span> {" "}  {isDoctor && appointment.relatedUserName ? `Patient: ${appointment.relatedUserName}` : null}
-                            {!isDoctor && appointment.relatedUserName ? `Dr. ${appointment.relatedUserName}` : null}</span>
+                        {isDoctor && appointment.relatedUserName ? (
+                            <span> Patient: {appointment.relatedUserName}</span>
+                        ) : null}
+                        {!isDoctor && appointment.relatedUserName ? (
+                            <span> Dr. {appointment.relatedUserName}</span>
+                        ) : null}
+                        {" "}
+                        {appointment.meetLink ? (
+                            <span>
+                                <a href={appointment.meetLink}>
+                                    <button>Meet</button>
+                                </a>
+                            </span>
+                        ) : null}
                     </li>
                 ))}
+
             </ul>
             <br />
         </div>
