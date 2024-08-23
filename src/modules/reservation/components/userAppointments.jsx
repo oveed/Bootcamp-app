@@ -4,7 +4,7 @@ import { db } from '../../../utils/firebaseConfig';
 import { useSelector } from "react-redux";
 import { formatDate } from '@fullcalendar/core';
 import { UserData } from '../../../utils/userData';
-
+import "../reservation.css"
 const UserAppointments = () => {
     const [appointments, setAppointments] = useState([]);
     const user = UserData()
@@ -92,26 +92,28 @@ const UserAppointments = () => {
 
     return (
         <div className='user-appointments'>
-            <h3>Your Appointments</h3>
+            <h3>My Appointments</h3>
             <ul>
                 {appointments.map(appointment => (
-                    <li key={appointment.id}>
+                    <li key={appointment.id} style={{ display: 'flex', alignItems: 'center', marginBottom: "10px" }}>
                         <b>{formatDate(appointment.start, {
                             year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit',
                             minute: '2-digit',
                             hour12: true
-                        })}</b>
+                        })} </b>
+
                         {isDoctor && appointment.relatedUserName ? (
-                            <span> Patient: {appointment.relatedUserName}</span>
+                            <span style={{ marginLeft: "5px" }}> Patient: {appointment.relatedUserName} </span>
                         ) : null}
+                        {" "}
                         {!isDoctor && appointment.relatedUserName ? (
-                            <span> Dr. {appointment.relatedUserName}</span>
+                            <span style={{ marginLeft: "5px" }}> Dr. {appointment.relatedUserName}</span>
                         ) : null}
                         {" "}
                         {appointment.meetLink ? (
-                            <span>
-                                <a href={appointment.meetLink}>
-                                    <button>Meet</button>
+                            <span style={{ marginLeft: '10px' }}>
+                                <a href={appointment.meetLink} className='meet-button'>
+                                    <button style={{ padding: '4px 8px' }}>Meeting</button>
                                 </a>
                             </span>
                         ) : null}

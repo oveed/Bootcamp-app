@@ -20,11 +20,13 @@ function ReservationPage() {
         }
     }, [id, dispatch]);
     return (
-        <>
+        <div style={{
+            margin: "10px",
+        }}>
             <UserAppointments />
             <DoctorName />
             <Calendar isDoctor={isDoctor} doctorId={id} />
-        </>
+        </div>
     )
 }
 

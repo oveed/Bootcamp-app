@@ -15,7 +15,6 @@ import "../reservation.css"
 const RESOURCES = [
     { id: 'a', title: 'Auditorium A' },
 ];
-
 function generateGoogleMeetLink() {
     const segment = () => Math.random().toString(36).substring(2, 6); // Generates a 4-character segment
     return `https://meet.google.com/${segment()}-${segment()}-${segment()}`;
@@ -60,14 +59,13 @@ export default class DemoApp extends React.Component {
                             dayGridPlugin,
                             timeGridPlugin,
                             interactionPlugin,
-                            resourceTimelinePlugin,
                         ]}
                         headerToolbar={{
-                            left: 'prev,next today',
+                            left: 'prev,next',
                             center: 'title',
-                            right: 'dayGridMonth,timeGridWeek,resourceTimelineDay'
+                            right: 'dayGridMonth,timeGridWeek,timeGridDay'
                         }}
-                        initialView='resourceTimelineDay'
+                        initialView='timeGridDay'
                         editable={true}
                         selectable={true}
                         selectMirror={true}
@@ -82,7 +80,6 @@ export default class DemoApp extends React.Component {
                         eventsSet={this.handleEvents}
                         slotMinTime="07:00:00"
                         slotMaxTime="21:00:00"
-                        height="300px"
                     />
                 </div>
             </div>
@@ -124,6 +121,7 @@ export default class DemoApp extends React.Component {
             start: selectInfo.startStr,
             end: selectInfo.endStr,
             allDay: selectInfo.allDay,
+            title: "patient",
             resourceId: selectInfo.resource ? selectInfo.resource.id : null,
         };
 
@@ -193,9 +191,9 @@ export default class DemoApp extends React.Component {
 function renderEventContent(eventInfo, isDoctor) {
     const isPatient = !isDoctor;
     return (
-        <div className="fc-event-filled">
+        <div>
             <b style={{ opacity: isPatient ? '0.5' : '1' }}>{eventInfo.timeText}</b>
-            {" "}<i style={{ opacity: isPatient ? '0.5' : '1' }}>{'    '} {isPatient ? '' : eventInfo.event.title}</i>
+            {" "}<i style={{ opacity: isPatient ? '0.5' : '1' }}>{'    '} {isPatient ? '' : eventInfo.title}</i>
         </div>
     );
 }

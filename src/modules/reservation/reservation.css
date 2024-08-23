@@ -5,14 +5,20 @@
     /* Makes it look disabled */
 }
 
-.fc-button-group,
+/* .fc-button-group,
 .fc-button,
 .fr-button-primary {
     width: 40px;
     margin: 10px 20px;
+}*/
+
+ul {
+    list-style: none;
+    padding-left: 0 !important;
 }
 
-button {
+
+.meet-button {
     max-width: 100px;
 }
 
