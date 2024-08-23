@@ -11,12 +11,7 @@ function DoctorCard({ name, specialization, description, age, id }) {
   const handleOnClick = () => {
     dispatch(setDoctorId(id));
     console.log("iddddddddddddddd", id)
-    navigate('/calendar', {
-      state: {
-        doctorId: id,
-        isDoctor: isDoctor
-      }
-    });
+    navigate(`/profile/${id}`);
   }
   return (
     <div className="doctor-card">
@@ -24,7 +19,7 @@ function DoctorCard({ name, specialization, description, age, id }) {
       <p className="doctor-specialization">{specialization}</p>
       <p className="doctor-specialization">{age}</p>
       <p className="doctor-description">{description}</p>
-      <button className="doctor-button" onClick={handleOnClick}>View Schedule</button>
+      <button className="doctor-button" onClick={handleOnClick}>View Profile</button>
     </div>
   );
 }

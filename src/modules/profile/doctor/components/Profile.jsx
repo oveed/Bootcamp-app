@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { doc, getDoc } from 'firebase/firestore';
-import { db } from '../../../utils/firebaseConfig';
-import { UserData } from '../../../utils/userData';
+import { db } from '../../../../utils/firebaseConfig';
+import { UserData } from '../../../../utils/userData';
 import { useNavigate } from "react-router-dom";
-import "../Profile.css"
+import "../../Profile.css"
 const ProfilePage = () => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);

@@ -10,7 +10,7 @@ const userStore = createSlice({
   reducers: {
     setDoctorId: (state, action) => {
         state.doctorId = action.payload;
-        console.log(state.doctorId)
+        console.log("DOC ID FROM STORE ",state.doctorId)
       },
     setIsDoctor: (state, action) => {
         const user = UserData()

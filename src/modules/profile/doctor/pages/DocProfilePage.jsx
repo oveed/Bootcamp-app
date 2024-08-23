@@ -1,13 +1,18 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
-import Calendar from "../../../reservation/components/calendar"
-function CalendarPage() {
-    const location = useLocation();
-    const { doctorId, isDoctor } = location.state || {};
-    if (!doctorId) {
-        console.error("No doctorId found in navigation state. Redirecting...");
-    }
-    return <Calendar isDoctor={isDoctor} doctorId={doctorId} />;
+import DoctorProfile from '../components/docProfile';
+import { useSelector } from "react-redux";
+import { useParams } from 'react-router-dom';
+
+function DocProfilePage() {
+    const { id } = useParams();
+    const { doctorId } = useSelector((store) => store.userStore);
+    console.log("doctor id from profile page ", doctorId)
+    console.log("params", id)
+    return (
+        <>
+            <DoctorProfile doctorId={id} />
+        </>
+    )
 }
 
-export default CalendarPage;
+export default DocProfilePage;
