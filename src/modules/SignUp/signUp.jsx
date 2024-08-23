@@ -1,9 +1,17 @@
 import React, { useState } from 'react';
-import './signUp.css';
-import { db } from "../../utils/firebaseConfig.js";
+import './DocSignUp.css';
+import { FaTrash } from 'react-icons/fa';
+import { db, auth } from "../../utils/firebaseConfig.js";
+import { doc, setDoc } from "firebase/firestore";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { useSelector } from "react-redux";
+import { useNavigate } from 'react-router-dom';
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
+const SignUpForm = () => {
+  const navigate = useNavigate();
+  const { role } = useSelector((state) => state.authStore);
 
-function SignUpForm() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -12,7 +20,28 @@ function SignUpForm() {
     gender: '',
     city: '',
     country: '',
+    specialty: '',
+    bio: '',
+    education: [''],
+    experience: [''],
+    picture: null,
   });
+
+  const [showEducation, setShowEducation] = useState(false);
+  const [showExperience, setShowExperience] = useState(false);
+
+  const calculateAge = (dob) => {
+    const birthDate = new Date(dob);
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDifference = today.getMonth() - birthDate.getMonth();
+
+    if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+    return age;
+  };
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -22,106 +51,217 @@ function SignUpForm() {
     });
   };
 
+  const handleEducationChange = (index, value) => {
+    const updatedEducation = [...formData.education];
+    updatedEducation[index] = value;
+    setFormData({ ...formData, education: updatedEducation });
+  };
+
+  const handleExperienceChange = (index, value) => {
+    const updatedExperience = [...formData.experience];
+    updatedExperience[index] = value;
+    setFormData({ ...formData, experience: updatedExperience });
+  };
+
+  const handleAddEducation = () => {
+    setFormData({ ...formData, education: [...formData.education, ''] });
+    setShowEducation(true);
+  };
+
+  const handleAddExperience = () => {
+    setFormData({ ...formData, experience: [...formData.experience, ''] });
+    setShowExperience(true);
+  };
+
+  const handleRemoveEducation = (index) => {
+    const updatedEducation = formData.education.filter((_, i) => i !== index);
+    setFormData({ ...formData, education: updatedEducation });
+    if (updatedEducation.length === 0) setShowEducation(false);
+  };
+
+  const handleRemoveExperience = (index) => {
+    const updatedExperience = formData.experience.filter((_, i) => i !== index);
+    setFormData({ ...formData, experience: updatedExperience });
+    if (updatedExperience.length === 0) setShowExperience(false);
+  };
+
+  const handlePictureChange = (e) => {
+    setFormData({ ...formData, picture: e.target.files[0] });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      // Add form data to Firestore
-      const docRef = await db.collection('users').add(formData);
-      console.log('Document written with ID: ', docRef.id);
-      // Handle success (e.g., show a message or redirect)
+      const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
+      const userId = userCredential.user.uid;
+
+      let imageUrl = null;
+
+      if (formData.picture) {
+        const storage = getStorage();
+        const storageRef = ref(storage, `profile_pictures/${userId}_${formData.picture.name}`);
+        await uploadBytes(storageRef, formData.picture);
+        imageUrl = await getDownloadURL(storageRef);
+      }
+
+      const userDoc = {
+        email: formData.email,
+        role: role,
+        id: userId,
+      };
+      const age = calculateAge(formData.dob);
+      if (role === 'doctor') {
+        await setDoc(doc(db, 'users', userId), {
+          ...userDoc,
+          fullName: formData.name,
+          specialty: formData.specialty,
+          age: age,
+          description: formData.bio,
+          education: formData.education,
+          experience: formData.experience,
+          picture: imageUrl,
+        });
+      } else {
+        await setDoc(doc(db, 'users', userId), {
+          ...userDoc,
+          fullName: formData.name,
+          age: age,
+          dob: formData.dob,
+          gender: formData.gender,
+          city: formData.city,
+          country: formData.country,
+        });
+      }
+
+      localStorage.setItem('user', JSON.stringify({
+        email: formData.email,
+        role: role,
+        uid: userId,
+      }));
+      await signInWithEmailAndPassword(auth, formData.email, formData.password);
+      navigate("/home");
     } catch (error) {
-      console.error('Error adding document: ', error);
-      // Handle error (e.g., show an error message)
+      console.error('Error during sign up: ', error);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="signup-form">
-      <label htmlFor="name" className="form-label">Name:</label>
-      <input
-        id="name"
-        type="text"
-        name="name"
-        value={formData.name}
-        onChange={handleChange}
-        required
-        className="form-input"
-      />
+    <form className="doctor-signup" onSubmit={handleSubmit}>
 
-      <label htmlFor="email" className="form-label">Email:</label>
-      <input
-        id="email"
-        type="email"
-        name="email"
-        value={formData.email}
-        onChange={handleChange}
-        required
-        className="form-input"
-      />
+      <h2>{role === 'doctor' ? 'Doctor Signup' : 'User Signup'}</h2>
 
-      <label htmlFor="dob" className="form-label">Date of Birth:</label>
-      <input
-        id="dob"
-        type="date"
-        name="dob"
-        value={formData.dob}
-        onChange={handleChange}
-        required
-        className="form-input"
-      />
+      <label>Name:</label>
+      <input type="text" name="name" value={formData.name} onChange={handleChange} required />
 
-      <label htmlFor="gender" className="form-label">Gender:</label>
-      <select
-        id="gender"
-        name="gender"
-        value={formData.gender}
-        onChange={handleChange}
-        required
-        className="form-select"
-      >
-        <option value="">Select Gender</option>
-        <option value="male">Male</option>
-        <option value="female">Female</option>
-        <option value="other">Other</option>
-      </select>
+      <label>Email:</label>
+      <input type="email" name="email" value={formData.email} onChange={handleChange} required />
 
-      <label htmlFor="city" className="form-label">City:</label>
-      <input
-        id="city"
-        type="text"
-        name="city"
-        value={formData.city}
-        onChange={handleChange}
-        required
-        className="form-input"
-      />
+      <label>Password:</label>
+      <input type="password" name="password" value={formData.password} onChange={handleChange} required />
 
-      <label htmlFor="country" className="form-label">Country:</label>
-      <input
-        id="country"
-        type="text"
-        name="country"
-        value={formData.country}
-        onChange={handleChange}
-        required
-        className="form-input"
-      />
+      <div>
+        <label>Date of Birth:</label>
+        <input
+          type="date"
+          name="dob"
+          value={formData.dob}
+          onChange={handleChange}
+          required
+        />
+      </div>
+      {role === 'doctor' && (
+        <>
+          <label>Specialty:</label>
+          <input type="text" name="specialty" value={formData.specialty} onChange={handleChange} required />
 
-      <label htmlFor="password" className="form-label">Password:</label>
-      <input
-        id="password"
-        type="password"
-        name="password"
-        value={formData.password}
-        onChange={handleChange}
-        required
-        className="form-input"
-      />
+          <label>Bio:</label>
+          <textarea name="bio" value={formData.bio} onChange={handleChange} required />
 
-      <button type="submit" className="signup-button">Sign Up</button>
+          <label>Education:</label>
+          {showEducation && formData.education.map((edu, index) => (
+            <div key={index} className="input-group">
+              <input
+                type="text"
+                value={edu}
+                onChange={(e) => handleEducationChange(index, e.target.value)}
+                required
+              />
+              <button type="button" className="remove-button" onClick={() => handleRemoveEducation(index)}>
+                <FaTrash />
+              </button>
+            </div>
+          ))}
+          <button type="button" className="add-button" onClick={handleAddEducation}>
+            Add Education
+          </button>
+
+          <label>Experience:</label>
+          {showExperience && formData.experience.map((exp, index) => (
+            <div key={index} className="input-group">
+              <input
+                type="text"
+                value={exp}
+                onChange={(e) => handleExperienceChange(index, e.target.value)}
+                required
+              />
+              <button type="button" className="remove-button" onClick={() => handleRemoveExperience(index)}>
+                <FaTrash />
+              </button>
+            </div>
+          ))}
+          <button type="button" className="add-button" onClick={handleAddExperience}>
+            Add Experience
+          </button>
+
+          <label>Profile Picture:</label>
+          <input type="file" onChange={handlePictureChange} accept="image/*" />
+        </>
+      )}
+
+      {role !== 'doctor' && (
+        <>
+
+          <div>
+            <label>Gender:</label>
+            <select
+              name="gender"
+              value={formData.gender}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Select Gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div>
+            <label>City:</label>
+            <input
+              type="text"
+              name="city"
+              value={formData.city}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div>
+            <label>Country:</label>
+            <input
+              type="text"
+              name="country"
+              value={formData.country}
+              onChange={handleChange}
+              required
+            />
+          </div>
+        </>
+      )}
+
+      <button type="submit" className="submit-button">Sign Up</button>
     </form>
   );
-}
+};
 
 export default SignUpForm;

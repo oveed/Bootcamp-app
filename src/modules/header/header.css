@@ -1,76 +1,75 @@
 /* Header.css */
 .header {
-    background-color: #346a74;
-    color: #ffffff;
-    padding: 10px 20px;
-    display: flex;
-    align-items: center;
-    position: fixed;
-    width: 100%;
-    height: 10%;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-  }
-  
+  background-color: #346a74;
+  color: #ffffff;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  position: fixed;
+  width: 100%;
+  height: 10%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.logo {
+  font-size: 2.2rem;
+  font-weight: bold;
+  letter-spacing: 3px;
+  padding-left: 0%;
+
+}
+
+.nav ul {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.nav li {
+  margin: 0 15px;
+  font-size: 1.5rem;
+
+
+}
+
+.nav a {
+  text-decoration: none;
+  font-size: 1.3rem;
+  padding: 5px 10px;
+  transition: color 0.3s;
+  color: #ffffff;
+
+}
+
+.nav a:hover {
+  color: #61dafb;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
   .header-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
+    flex-direction: column;
+    align-items: flex-start;
   }
-  
-  .logo {
-    font-size: 2.2rem;
-    font-weight: bold;
-    letter-spacing: 3px;
-    padding-left: 0%;
 
-  }
-  
   .nav ul {
-    list-style: none;
-    display: flex;
-    margin: 0;
-    padding: 0;
+    flex-direction: column;
+    align-items: flex-start;
   }
-  
-  .nav li {
-    margin: 0 15px;
-    font-size : 1.5rem;
 
-    
+  .nav li {
+    margin: 5px 0;
   }
-  
-  .nav a {
-    text-decoration: none;
-    font-size: 1.3rem;
-    padding: 5px 10px;
-    transition: color 0.3s;
-    color: #ffffff;
-    
-  }
-  
-  .nav a:hover {
-    color: #61dafb;
-  }
-  
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .header-content {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-  
-    .nav ul {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-  
-    .nav li {
-      margin: 5px 0;
-    }
-  }
-  
+}

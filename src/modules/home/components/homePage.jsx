@@ -1,12 +1,12 @@
 import React from 'react';
 import './HomePage.css';
 import { Link } from 'react-router-dom';
-
+import bgImg from '../../../assets/bg6.jpg';
 function HomePage() {
   return (
     <div className="home-page">
 
-      <div className="hero">
+      <div className="hero" style={{ backgroundImage: `url(${bgImg})` }}>
         <div className="hero-content">
           <h1>Welcome to TherapyHub</h1>
           <p className="quote" >“Accessible mental health support, anytime, anywhere”</p>
