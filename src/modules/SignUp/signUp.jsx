@@ -49,7 +49,8 @@ function SignUpForm() {
           required
         />
       </div>
- 
+
+
       <div>
         <label>Date of Birth:</label>
         <input

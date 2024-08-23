@@ -1,0 +1,17 @@
+.disabled-event {
+    pointer-events: none;
+    /* Disables interaction */
+    opacity: 0.6;
+    /* Makes it look disabled */
+}
+
+.fc-button-group,
+.fc-button,
+.fr-button-primary {
+    width: 40px;
+    margin: 10px 20px;
+}
+
+button {
+    max-width: 100px;
+}
