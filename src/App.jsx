@@ -14,11 +14,12 @@ import DoctorSignup from './modules/SignUp/docSignUp';
 function App() {
   return (
     <div className="App">
-      <Header/>
+      {/* <Header /> */}
       <Routes>
         <Route path="/home" exact element={<Home />} />
         <Route path="/login" exact element={<AuthPage />} />
-        <Route path="/docList" exact element={<DoctorList />}/>
+        <Route path="/docList" exact element={<DoctorList />} />
+        <Route path="/myprofile" exact element={<DoctorProfile />} />
       </Routes>
       <Footer />
     </div>
