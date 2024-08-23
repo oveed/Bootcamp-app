@@ -1,4 +1,3 @@
-// Example slice
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { UserData } from '../utils/userData';
 import { db } from '../utils/firebaseConfig';

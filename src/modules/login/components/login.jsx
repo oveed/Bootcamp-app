@@ -1,13 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { auth, db } from '../../../utils/firebaseConfig'; // Add Firestore db import
+import React, { useState } from 'react';
+import { auth, db } from '../../../utils/firebaseConfig';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
-import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore'; // Firestore methods
-import { onAuthStateChanged, getIdToken } from 'firebase/auth';
-import { UserData } from '../../../utils/userData';
+import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore';
 import { useNavigate } from "react-router-dom";
+import RoleSelectionModal from "../../SignUp/register";
 import './login.css';
-
+import SignUpForm from '../../SignUp/signUp';
+import DoctorSignup from '../../SignUp/docSignUp';
+import { showModal, hideModal } from '../../../core/AuthStore';
+import { useDispatch, useSelector } from 'react-redux';
 const AuthPage = () => {
+    const dispatch = useDispatch();
+    const { isModalOpen } = useSelector((state) => state.authStore);
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [role, setRole] = useState('');
@@ -15,57 +20,42 @@ const AuthPage = () => {
     const [age, setAge] = useState('');
     const [specialty, setSpecialty] = useState('');
     const [description, setDescription] = useState('');
-
     const [isRegistering, setIsRegistering] = useState(false);
+    // const [showModal, setShowModal] = useState(false);
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         try {
             let userCredential;
             if (isRegistering) {
                 if (!role) {
-                    alert("Please select a role: Patient or Doctor");
+                    alert("Please select a role");
+                    setLoading(false);
                     return;
                 }
 
                 userCredential = await createUserWithEmailAndPassword(auth, email, password);
 
+                const userDocRef = doc(db, 'users', userCredential.user.uid);
+                const userData = {
+                    email,
+                    role,
+                    createdAt: serverTimestamp(),
+                };
+
                 if (role === 'doctor') {
-                    await setDoc(doc(db, 'users', userCredential.user.uid), {
-                        email: email,
-                        role: role,
-                        fullName: fullName,
-                        age: age,
-                        specialty: specialty,
-                        description: description || '',
-                        id: userCredential.user.uid,
-                        createdAt: serverTimestamp(),
-                    });
-
-                    localStorage.setItem('user', JSON.stringify({
-                        email: email,
-                        role: role,
-                        uid: userCredential.user.uid,
-                        fullName: fullName,
-                        age: age,
-                        specialty: specialty,
-                        description: description || '',
-                    }));
-                } else {
-                    await setDoc(doc(db, 'users', userCredential.user.uid), {
-                        email: email,
-                        role: role,
-                        id: userCredential.user.uid,
-
-                    });
-
-                    localStorage.setItem('user', JSON.stringify({
-                        email: email,
-                        role: role,
-                        uid: userCredential.user.uid,
-                    }));
+                    userData.fullName = fullName;
+                    userData.age = age;
+                    userData.specialty = specialty;
+                    userData.description = description || '';
                 }
+
+                await setDoc(userDocRef, userData);
+
+                localStorage.setItem('user', JSON.stringify({ ...userData, uid: userCredential.user.uid }));
 
                 alert("User registered successfully");
                 navigate("/home");
@@ -87,115 +77,80 @@ const AuthPage = () => {
                 }
             }
 
-            // Retrieve the ID token and save it in localStorage
-            const token = await getIdToken(userCredential.user);
+            const token = await userCredential.user.getIdToken();
             localStorage.setItem('token', token);
 
         } catch (error) {
             console.error("Error during authentication", error);
             alert(error.message);
+        } finally {
+            setLoading(false);
         }
     };
 
+    // const handleRoleSelection = (selectedRole) => {
+    //     setRole(selectedRole);
+    //     setShowModal(false);
+    //     setIsRegistering(true); // Trigger registration form after role selection
+    // };
+    const handleRegistration = () => {
+        dispatch(showModal())
+        console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+        console.log(isModalOpen)
+    }
     return (
         <div className="auth-page">
             <h2>{isRegistering ? 'Register' : 'Login'}</h2>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Email</label>
-                    <input
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
+            {
+                isModalOpen ? (
+                    <RoleSelectionModal
                     />
-                </div >
-                <div>
-                    <label>Password</label>
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
-                </div>
-                {
-                    isRegistering && (
-                        <>
-                            <div>
+                ) : (
+                    <div className="auth-form-container">
+                        {!isRegistering ? (
+                            <form onSubmit={handleSubmit}>
                                 <div>
-                                    <label>Full Name</label>
+                                    <label>Email</label>
                                     <input
-                                        type="text"
-                                        value={fullName}
-                                        onChange={(e) => setFullName(e.target.value)}
+                                        type="email"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
                                         required
                                     />
                                 </div>
-                                <label>Role</label>
                                 <div>
-                                    <label>
-                                        <input
-                                            type="radio"
-                                            value="patient"
-                                            checked={role === 'patient'}
-                                            onChange={(e) => setRole(e.target.value)}
-                                        />
-                                        Patient
-                                    </label>
-                                    <label>
-                                        <input
-                                            type="radio"
-                                            value="doctor"
-                                            checked={role === 'doctor'}
-                                            onChange={(e) => setRole(e.target.value)}
-                                        />
-                                        Doctor
-                                    </label>
+                                    <label>Password</label>
+                                    <input
+                                        type="password"
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        required
+                                    />
                                 </div>
-                            </div >
-
-                            {role === 'doctor' && (
-                                <>
-
-                                    <div>
-                                        <label>Age</label>
-                                        <input
-                                            type="number"
-                                            value={age}
-                                            onChange={(e) => setAge(e.target.value)}
-                                            required
-                                        />
-                                    </div>
-                                    <div>
-                                        <label>Specialty</label>
-                                        <input
-                                            type="text"
-                                            value={specialty}
-                                            onChange={(e) => setSpecialty(e.target.value)}
-                                            required
-                                        />
-                                    </div>
-                                    <div>
-                                        <label>Description (optional)</label>
-                                        <textarea
-                                            value={description}
-                                            onChange={(e) => setDescription(e.target.value)}
-                                        />
-                                    </div>
-                                </>
+                                <button type="submit" disabled={loading}>
+                                    {loading ? 'Processing...' : 'Login'}
+                                </button>
+                            </form>
+                        ) : (
+                            role === 'doctor' ? (
+                                <DoctorSignup />
+                            ) : (
+                                role === 'patient' && <SignUpForm />
                             )
-                            }
-                        </>
-                    )}
+                        )}
+                    </div>
+                )
+            }
 
-                <button type="submit">
-                    {isRegistering ? 'Register' : 'Login'}
-                </button>
-            </form >
-            <button type="button" onClick={() => setIsRegistering(!isRegistering)}>
-                {isRegistering ? 'Already have an account? Login' : 'Don\'t have an account? Register'}
-            </button>
+            {
+                !isRegistering && !isModalOpen && (
+                    <p> Don’t have an account?{' '}
+                        <a onClick={handleRegistration}>
+                            Register
+                        </a>
+                    </p>
+                )
+            }
         </div >
     );
 };

@@ -5,13 +5,52 @@
     /* Makes it look disabled */
 }
 
-.fc-button-group,
+/* .fc-button-group,
 .fc-button,
 .fr-button-primary {
     width: 40px;
     margin: 10px 20px;
+}*/
+
+ul {
+    list-style: none;
+    padding-left: 0 !important;
 }
 
-button {
+
+.meet-button {
     max-width: 100px;
 }
+
+/* .fc-timeline-event-harness {
+    top: 0;
+    left: 120px;
+    right: -150px;
+    height: 100%;
+    position: absolute;
+}
+
+.fc-event {
+    height: 100%;
+    background-color: #4CAF50;
+    color: white;
+    border: 1px solid #388E3C;
+    border-radius: 5px;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.fc-event-main .fc-event-filled {
+    width: 100%;
+    opacity: 1;
+}
+
+.fc-event-main .fc-event-filled b,
+.fc-event-main .fc-event-filled i {
+    opacity: 0.5;
+} */
