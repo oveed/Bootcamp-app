@@ -7,8 +7,10 @@ import ProfilePage from './modules/profile/doctor/components/Profile';
 import Calendar from './modules/reservation/components/calendar';
 import Header from "./modules/header/header";
 import Footer from './modules/footer/footer';
-import './App.css';
 import DoctorList from './modules/docList/docList';
+import Contact from './modules/contact/contact';
+import ChatBot from './modules/chatbot/ChatBot';
+
 import UserProfile from './modules/profile/patient/components/userProfile';
 import DoctorProfile from './modules/profile/doctor/components/docProfile';
 import DoctorSignup from './modules/SignUp/docSignUp';
@@ -39,6 +41,7 @@ function App() {
       <Routes>
         <Route path="/home" exact element={<Home />} />
         <Route path="/login" exact element={<AuthPage />} />
+        <Route path="/contact" exact element={<Contact />} />
         {/* <Route path="/profile" exact element={<PrivateRoute>
           <ProfilePage />
         </PrivateRoute>} /> */}
@@ -49,6 +52,7 @@ function App() {
         <Route path="/profile/:id" exact element={<PrivateRoute><DocProfilePage /></PrivateRoute>} />
         <Route path="/reservation/:id" exact element={<PrivateRoute><ReservationPage /></PrivateRoute>} />
       </Routes>
+      <ChatBot />
       <Footer />
     </div>
   );
