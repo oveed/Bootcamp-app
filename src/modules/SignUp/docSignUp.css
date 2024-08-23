@@ -1,0 +1,100 @@
+/* Container Styling */
+.doctor-signup {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    font-family: 'Arial', sans-serif;
+  }
+  
+  /* Form Title */
+  .doctor-signup h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 25px;
+    font-size: 24px;
+    font-weight: 600;
+  }
+  
+  /* Form Labels */
+  .doctor-signup label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #444;
+  }
+  
+  /* Form Inputs */
+  .doctor-signup input[type="text"],
+  .doctor-signup textarea,
+  .doctor-signup input[type="file"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    color: #555;
+  }
+  
+  .doctor-signup textarea {
+    resize: vertical;
+    height: 120px;
+  }
+  
+  /* Input Groups (for adding/removing fields) */
+  .input-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .input-group input {
+    flex: 1;
+  }
+  
+  .input-group .remove-button {
+    margin-left: 10px;
+    padding: 8px 12px;
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .input-group .remove-button:hover {
+    background-color: #c0392b;
+  }
+  
+  /* Add Buttons */
+  .doctor-signup .add-button {
+    margin-bottom: 20px;
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .doctor-signup .submit-button:hover {
+    background-color: #218838;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .doctor-signup {
+      padding: 20px;
+    }
+  
+    .doctor-signup input[type="text"],
+    .doctor-signup textarea,
+    .doctor-signup input[type="file"] {
+      width: calc(100% - 16px);
+    }
+  }  
