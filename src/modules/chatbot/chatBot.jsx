@@ -17,6 +17,13 @@ import './ChatBot.css';
     "Find ways to learn and be creative.",
     "Work some omega-3 fatty acids into your diet–they are linked to decreased rates of depression and schizophrenia among their many benefits. Fish oil supplements work, but eating your omega-3s in foods like wild salmon, flaxseeds or walnuts also helps build healthy gut bacteria.",
     "Anyone who has never made a mistake has never tried anything new. -Albert Einstein. Try something outside of your comfort zone to make room for adventure and excitement in your life.",
+     "Staying active is as good for the brain as it is for the body. Regular exercise or activity can have a major impact on your mental and emotional health, relieve stress, improve memory, and help you sleep better.",
+     "Talk to a friendly face. If you have concerns, stresses or worries, sharing these with someone who cares is one of the most effective ways to calm your nervous system and relieve stress. And vice versa: Sometimes listening to others in a safe and supported way can help you develop wider perspectives. It is important that both parties feel comfortable to share and hear each other's thoughts, and if the worries are beyond this, consider speaking to a professional (see programs and resources at the end of the article).",
+     
+
+
+
+
 
 
   ];
