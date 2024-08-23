@@ -67,6 +67,7 @@ function DoctorList() {
         {filteredDoctors.map((doctor) => (
           <DoctorCard
             key={doctor.id}
+            id={doctor.id}
             name={doctor.name}
             specialization={doctor.specialization}
             age={doctor.age}

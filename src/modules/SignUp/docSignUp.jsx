@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import './DocSignUp.css'; 
-import { FaTrash } from 'react-icons/fa'; 
+import './DocSignUp.css';
+import { FaTrash } from 'react-icons/fa';
 
 const DoctorSignup = () => {
   const [doctor, setDoctor] = useState({
@@ -64,15 +64,14 @@ const DoctorSignup = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(doctor);
-    // Add functionality to send data to backend or Firebase
   };
 
   return (
-    
+
     <form className="doctor-signup" onSubmit={handleSubmit}>
-      
+
       <h2>Doctor Signup</h2>
-      
+
       <label>Name:</label>
       <input type="text" name="name" value={doctor.name} onChange={handleChange} required />
 
