@@ -9,6 +9,8 @@ import resourceTimelinePlugin from '@fullcalendar/resource-timeline';
 import { collection, addDoc, getDocs, deleteDoc, doc } from 'firebase/firestore';
 import { db } from '../../../utils/firebaseConfig'; // Import your Firebase configuration
 import { UserData } from '../../../utils/userData';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const RESOURCES = [
     { id: 'a', title: 'Auditorium A' },
     { id: 'b', title: 'Auditorium B', eventColor: 'green' },
@@ -46,6 +48,7 @@ export default class DemoApp extends React.Component {
     render() {
         return (
             <div className='demo-app'>
+                <ToastContainer />
                 {this.renderSidebar()}
                 <div className='demo-app-main'>
                     <FullCalendar
@@ -57,9 +60,9 @@ export default class DemoApp extends React.Component {
                             resourceTimelinePlugin,
                         ]}
                         headerToolbar={{
-                            left: 'prev,next today',
+                            left: '',
                             center: 'title',
-                            right: 'dayGridMonth,timeGridWeek,resourceTimelineDay'
+                            right: 'prev,next today,dayGridMonth,timeGridWeek,resourceTimelineDay'
                         }}
                         initialView='resourceTimelineDay'
                         editable={true}
@@ -74,6 +77,8 @@ export default class DemoApp extends React.Component {
                         eventContent={(eventInfo) => renderEventContent(eventInfo, this.props.isDoctor)}
                         eventClick={this.handleEventClick}
                         eventsSet={this.handleEvents}
+                        slotMinTime="07:00:00"
+                        slotMaxTime="21:00:00"
                     />
                 </div>
             </div>
@@ -100,8 +105,6 @@ export default class DemoApp extends React.Component {
     };
 
     handleDateSelect = async (selectInfo) => {
-
-
         const overlappingEvent = this.state.currentApps.find(event => {
             return (
                 selectInfo.start < new Date(event.end) && new Date(event.start) < selectInfo.end
@@ -109,41 +112,39 @@ export default class DemoApp extends React.Component {
         });
 
         if (overlappingEvent) {
-            alert('This time slot is already booked.');
+            toast.error('This time slot is already booked.');
             return;
         }
-
-        let title = prompt('Please enter a new title for your event');
+        if (!confirm('Do you want to book this time slot?')) {
+            return;
+        }
         let calendarApi = selectInfo.view.calendar;
 
         calendarApi.unselect();
 
-        if (title) {
-            const newApp = {
-                title,
-                start: selectInfo.startStr,
-                end: selectInfo.endStr,
-                allDay: selectInfo.allDay,
-                resourceId: selectInfo.resource ? selectInfo.resource.id : null,
-            };
-            const AppToStore = {
-                title,
-                start: selectInfo.startStr,
-                end: selectInfo.endStr,
-                resourceId: selectInfo.resource ? selectInfo.resource.id : null,
-                userId: this.props.isDoctor ? this.user.uid : this.props.doctorId  // Adjusting the userId based on whether the user is a doctor or patient
-            };
+        const newApp = {
+            start: selectInfo.startStr,
+            end: selectInfo.endStr,
+            allDay: selectInfo.allDay,
+            resourceId: selectInfo.resource ? selectInfo.resource.id : null,
+        };
 
+        const AppToStore = {
+            start: selectInfo.startStr,
+            end: selectInfo.endStr,
+            resourceId: selectInfo.resource ? selectInfo.resource.id : null,
+            userId: this.props.isDoctor ? this.user.uid : this.props.doctorId  // Adjusting the userId based on whether the user is a doctor or patient
+        };
 
-            try {
-                // Add the event to Firestore
-                const docRef = await addDoc(collection(db, "appointments"), AppToStore);
-                newApp.id = docRef.id;
-                calendarApi.addEvent(newApp);
-            } catch (e) {
-                console.error("Error adding document: ", e);
-            }
+        try {
+            // Add the event to Firestore
+            const docRef = await addDoc(collection(db, "appointments"), AppToStore);
+            newApp.id = docRef.id;
+            calendarApi.addEvent(newApp);
+        } catch (e) {
+            console.error("Error adding document: ", e);
         }
+
     };
 
 
@@ -156,8 +157,10 @@ export default class DemoApp extends React.Component {
                 try {
                     // Remove the event from Firestore
                     await deleteDoc(doc(db, "events", eventId));
+                    toast.success('Appointment deleted successfully.');
                 } catch (e) {
                     console.error("Error removing document: ", e);
+                    toast.error('Error removing the appointment.');
                 }
             }
         } else {
@@ -201,7 +204,7 @@ function renderEventContent(eventInfo, isDoctor) {
 
 function renderSidebarEvent(event) {
     return (
-        <li key={event.id}>
+        <li key={`${event.id}-${event.start}`}>
             <b>{formatDate(event.start, { year: 'numeric', month: 'short', day: 'numeric' })}</b>
             {" "}<i>{event.title}</i>
         </li>
