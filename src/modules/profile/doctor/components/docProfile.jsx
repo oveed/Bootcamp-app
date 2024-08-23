@@ -8,7 +8,6 @@ const DoctorProfile = ({ doctorId }) => {
   const navigate = useNavigate();
   const [doctor, setDoctor] = useState(null);
   const [loading, setLoading] = useState(true);
-  console.log("hahiya ", doctorId)
   useEffect(() => {
     if (!doctorId) return;
 
