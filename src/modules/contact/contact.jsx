@@ -43,33 +43,15 @@ const Contact = () => {
           <div className="info">
             <div className="information">
               <img src={locationImg} className="icon" alt="" />
-              <p>ariana</p>
+              <p>Tunis, Tunisia</p>
             </div>
             <div className="information">
               <img src={mailImg} className="icon" alt="" />
-              <p>imenguedri468@gmail.com</p>
+              <p>contact@therapy.com</p>
             </div>
             <div className="information">
               <img src={phoneImg} className="icon" alt="" />
-              <p>52396591</p>
-            </div>
-          </div>
-
-          <div className="social-media">
-            <p>Connect with us :</p>
-            <div className="social-icons">
-              <a href="#">
-                <i className="fab fa-facebook-f"></i>
-              </a>
-              <a href="#">
-                <i className="fab fa-twitter"></i>
-              </a>
-              <a href="#">
-                <i className="fab fa-instagram"></i>
-              </a>
-              <a href="#">
-                <i className="fab fa-linkedin-in"></i>
-              </a>
+              <p>+216 70 546 785</p>
             </div>
           </div>
         </div>

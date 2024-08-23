@@ -50,7 +50,7 @@ form {
 }
 
 .contact-info .title {
-  color:#ac3a73;
+  color:#002538;
   font-weight: 500;
   font-size: 1.5rem;
   line-height: 1;
@@ -58,13 +58,15 @@ form {
 }
 
 .contact-info .text {
-  color: #333;
+  color: #346A74;
   margin: 1.5rem 0 2rem 0;
+  
+  
 }
 
 .contact-info .information {
   display: flex;
-  color: #555;
+  color: #002538;
   margin: 0.7rem 0;
   align-items: center;
   font-size: 0.95rem;
@@ -75,37 +77,11 @@ form {
   margin-right: 0.7rem;
 }
 
-.contact-info .social-media {
-  padding: 2rem 0 0 0;
-}
 
-.contact-info .social-media p {
-  color: #333;
-}
 
-.contact-info .social-icons {
-  display: flex;
-  margin-top: 0.5rem;
-}
-
-.contact-info .social-icons a {
-  width: 35px;
-  height: 35px;
-  border-radius: 5px;
-  background: linear-gradient(45deg, #ac3a73 ,  #ac3a73);
-  color: #fff;
-  text-align: center;
-  line-height: 35px;
-  margin-right: 0.5rem;
-  transition: 0.3s;
-}
-
-.contact-info .social-icons a:hover {
-  transform: scale(1.05);
-}
 
 .contact-form {
-  background-color:  #ac3a73;
+  background-color:  #002538;
   position: relative;
   padding: 2.3rem 2.2rem;
   border-radius: 10px;
@@ -184,7 +160,7 @@ textarea.input {
   opacity: 0;
   transition: 0.3s;
   height: 5px;
-  background-color:  #ac3a73;
+  background-color:  #002538;
   top: 50%;
   transform: translateY(-50%);
 }
@@ -215,7 +191,7 @@ textarea.input {
   background-color: #fff;
   border: 2px solid #2b2727;
   font-size: 0.95rem;
-  color:  #ac3a73;
+  color:  #002538;
   line-height: 1;
   border-radius: 25px;
   outline: none;
@@ -231,7 +207,7 @@ textarea.input {
 
 .circle {
   border-radius: 50%;
-  background: linear-gradient(135deg, transparent 20%,  #ac3a73);
+  background: linear-gradient(135deg, transparent 20%,  #346A74);
   position: absolute;
 }
 
