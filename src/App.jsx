@@ -9,7 +9,7 @@ import Header from "./modules/header/header";
 import Footer from './modules/footer/footer';
 import DoctorList from './modules/docList/docList';
 import Contact from './modules/contact/contact';
-import ChatBot from './modules/chatbot/ChatBot';
+import ChatBot from './modules/chatbot/';
 import "./App.css"
 import UserProfile from './modules/profile/patient/components/userProfile';
 import DoctorProfile from './modules/profile/doctor/components/docProfile';
