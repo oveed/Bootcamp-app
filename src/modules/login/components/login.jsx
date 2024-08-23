@@ -39,6 +39,7 @@ const AuthPage = () => {
                         age: age,
                         specialty: specialty,
                         description: description || '',
+                        id: userCredential.user.uid,
                         createdAt: serverTimestamp(),
                     });
 
@@ -103,15 +104,6 @@ const AuthPage = () => {
             <h2>{isRegistering ? 'Register' : 'Login'}</h2>
             <form onSubmit={handleSubmit}>
                 <div>
-                    <label>Full Name</label>
-                    <input
-                        type="text"
-                        value={fullName}
-                        onChange={(e) => setFullName(e.target.value)}
-                        required
-                    />
-                </div>
-                <div>
                     <label>Email</label>
                     <input
                         type="email"
@@ -119,7 +111,7 @@ const AuthPage = () => {
                         onChange={(e) => setEmail(e.target.value)}
                         required
                     />
-                </div>
+                </div >
                 <div>
                     <label>Password</label>
                     <input
@@ -129,73 +121,84 @@ const AuthPage = () => {
                         required
                     />
                 </div>
-                {isRegistering && (
-                    <>
-                        <div>
-                            <label>Role</label>
+                {
+                    isRegistering && (
+                        <>
                             <div>
-                                <label>
-                                    <input
-                                        type="radio"
-                                        value="patient"
-                                        checked={role === 'patient'}
-                                        onChange={(e) => setRole(e.target.value)}
-                                    />
-                                    Patient
-                                </label>
-                                <label>
-                                    <input
-                                        type="radio"
-                                        value="doctor"
-                                        checked={role === 'doctor'}
-                                        onChange={(e) => setRole(e.target.value)}
-                                    />
-                                    Doctor
-                                </label>
-                            </div>
-                        </div>
-
-                        {role === 'doctor' && (
-                            <>
-
                                 <div>
-                                    <label>Age</label>
-                                    <input
-                                        type="number"
-                                        value={age}
-                                        onChange={(e) => setAge(e.target.value)}
-                                        required
-                                    />
-                                </div>
-                                <div>
-                                    <label>Specialty</label>
+                                    <label>Full Name</label>
                                     <input
                                         type="text"
-                                        value={specialty}
-                                        onChange={(e) => setSpecialty(e.target.value)}
+                                        value={fullName}
+                                        onChange={(e) => setFullName(e.target.value)}
                                         required
                                     />
                                 </div>
+                                <label>Role</label>
                                 <div>
-                                    <label>Description (optional)</label>
-                                    <textarea
-                                        value={description}
-                                        onChange={(e) => setDescription(e.target.value)}
-                                    />
+                                    <label>
+                                        <input
+                                            type="radio"
+                                            value="patient"
+                                            checked={role === 'patient'}
+                                            onChange={(e) => setRole(e.target.value)}
+                                        />
+                                        Patient
+                                    </label>
+                                    <label>
+                                        <input
+                                            type="radio"
+                                            value="doctor"
+                                            checked={role === 'doctor'}
+                                            onChange={(e) => setRole(e.target.value)}
+                                        />
+                                        Doctor
+                                    </label>
                                 </div>
-                            </>
-                        )}
-                    </>
-                )}
+                            </div >
+
+                            {role === 'doctor' && (
+                                <>
+
+                                    <div>
+                                        <label>Age</label>
+                                        <input
+                                            type="number"
+                                            value={age}
+                                            onChange={(e) => setAge(e.target.value)}
+                                            required
+                                        />
+                                    </div>
+                                    <div>
+                                        <label>Specialty</label>
+                                        <input
+                                            type="text"
+                                            value={specialty}
+                                            onChange={(e) => setSpecialty(e.target.value)}
+                                            required
+                                        />
+                                    </div>
+                                    <div>
+                                        <label>Description (optional)</label>
+                                        <textarea
+                                            value={description}
+                                            onChange={(e) => setDescription(e.target.value)}
+                                        />
+                                    </div>
+                                </>
+                            )
+                            }
+                        </>
+                    )}
 
                 <button type="submit">
                     {isRegistering ? 'Register' : 'Login'}
                 </button>
-            </form>
+            </form >
             <button type="button" onClick={() => setIsRegistering(!isRegistering)}>
                 {isRegistering ? 'Already have an account? Login' : 'Don\'t have an account? Register'}
             </button>
-        </div>
+        </div >
     );
 };
 
