@@ -11,6 +11,7 @@ import { db } from '../../../utils/firebaseConfig'; // Import your Firebase conf
 import { UserData } from '../../../utils/userData';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import "../reservation.css"
 const RESOURCES = [
     { id: 'a', title: 'Auditorium A' },
     { id: 'b', title: 'Auditorium B', eventColor: 'green' },
