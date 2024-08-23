@@ -1,49 +1,68 @@
 .doctor-card {
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    margin-bottom: 20px;
-    text-align: center;
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  
-  .doctor-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-  }
-  
-  .doctor-name {
-    font-size: 1.5em;
-    color: #333;
-    margin-bottom: 10px;
-  }
-  
-  .doctor-specialization {
-    font-size: 1.2em;
-    color: #666;
-    margin-bottom: 10px;
-  }
-  
-  .doctor-description {
-    font-size: 1em;
-    color: #444;
-    margin-bottom: 20px;
-  }
-  
-  .doctor-button {
-    background: #007bff;
-    border: none;
-    border-radius: 5px;
-    color: #fff;
-    cursor: pointer;
-    padding: 10px 15px;
-    font-size: 1em;
-    transition: background-color 0.2s;
-  }
-  
-  .doctor-button:hover {
-    background-color: #0056b3;
-  }
-  
+  display: flex;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: #fff;
+
+}
+
+.doctor-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.doctor-picture {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin: 16px;
+}
+
+.doctor-info {
+  padding: 16px;
+}
+
+.doctor-name {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.doctor-specialization {
+  margin: 8px 0;
+  font-size: 1.1rem;
+  color: #666;
+}
+
+.doctor-age {
+  margin: 8px 0;
+  font-size: 1rem;
+  color: #999;
+}
+
+.doctor-description {
+  margin: 16px 0;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.doctor-button {
+  padding: 10px 16px;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 200px;
+}
+
+.doctor-button:hover {
+  background-color: #0056b3;
+}

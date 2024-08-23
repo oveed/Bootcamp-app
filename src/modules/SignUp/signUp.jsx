@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import './signUp.css';
+import { db } from "../../utils/firebaseConfig.js";
+
 
 function SignUpForm() {
   const [formData, setFormData] = useState({
@@ -20,10 +22,18 @@ function SignUpForm() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission
-    console.log('Form Data:', formData);
+
+    try {
+      // Add form data to Firestore
+      const docRef = await db.collection('users').add(formData);
+      console.log('Document written with ID: ', docRef.id);
+      // Handle success (e.g., show a message or redirect)
+    } catch (error) {
+      console.error('Error adding document: ', error);
+      // Handle error (e.g., show an error message)
+    }
   };
 
   return (

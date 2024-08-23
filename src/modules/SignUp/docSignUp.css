@@ -2,10 +2,10 @@
 .doctor-signup {
     max-width: 700px;
     margin: 0 auto;
-    padding: 30px;
-    background-color: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    padding: 40px;
+    background-color: #f9f9f9;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
     font-family: 'Arial', sans-serif;
   }
   
@@ -13,88 +13,108 @@
   .doctor-signup h2 {
     text-align: center;
     color: #333;
-    margin-bottom: 25px;
-    font-size: 24px;
-    font-weight: 600;
+    margin-bottom: 30px;
+    font-size: 28px;
+    font-weight: 700;
   }
   
   /* Form Labels */
   .doctor-signup label {
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     font-weight: 600;
-    color: #444;
+    color: #555;
+    font-size: 16px;
   }
   
   /* Form Inputs */
   .doctor-signup input[type="text"],
   .doctor-signup textarea,
   .doctor-signup input[type="file"] {
-    width: calc(100% - 20px);
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
     border-radius: 8px;
     font-size: 16px;
-    color: #555;
+    color: #333;
+    box-sizing: border-box; /* Ensures padding is included in the width */
   }
   
   .doctor-signup textarea {
     resize: vertical;
-    height: 120px;
+    min-height: 150px;
   }
   
   /* Input Groups (for adding/removing fields) */
   .input-group {
     display: flex;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
   }
   
   .input-group input {
     flex: 1;
+    margin-right: 10px;
   }
   
   .input-group .remove-button {
-    margin-left: 10px;
-    padding: 8px 12px;
-    background-color: #e74c3c;
-    color: white;
+    background: none;
     border: none;
-    border-radius: 6px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 20px;
+    color: #e57373;
+    transition: color 0.3s;
   }
   
   .input-group .remove-button:hover {
-    background-color: #c0392b;
+    color: #c62828;
   }
   
   /* Add Buttons */
   .doctor-signup .add-button {
-    margin-bottom: 20px;
-    padding: 10px 15px;
-    background-color: #007bff;
+    padding: 12px 20px;
+    background-color: #1976d2;
     color: white;
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
     cursor: pointer;
     font-size: 16px;
+    transition: background-color 0.3s;
+  }
+  
+  .doctor-signup .add-button:hover {
+    background-color: #1565c0;
+  }
+  
+  /* Submit Button */
+  .doctor-signup .submit-button {
+    padding: 12px 20px;
+    background-color: #388e3c;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
   }
   
   .doctor-signup .submit-button:hover {
-    background-color: #218838;
+    background-color: #2c6e49;
+  }
+  
+  /* Input Focus Styling */
+  .doctor-signup input:focus,
+  .doctor-signup textarea:focus {
+    border-color: #1976d2;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.2);
   }
   
   /* Responsive Design */
   @media (max-width: 768px) {
     .doctor-signup {
-      padding: 20px;
+      padding: 25px;
     }
+  }
   
-    .doctor-signup input[type="text"],
-    .doctor-signup textarea,
-    .doctor-signup input[type="file"] {
-      width: calc(100% - 16px);
-    }
-  }  

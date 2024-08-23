@@ -7,20 +7,19 @@ import Header from "./modules/header/header";
 import Footer from './modules/footer/footer';
 import './App.css';
 import DoctorList from './modules/docList/docList';
-import UserProfile from './modules/profile/components/userProfile';
 import DoctorProfile from './modules/profile/components/docProfile';
-import DoctorSignup from './modules/SignUp/docSignUp';
+
 
 function App() {
   return (
     <div className="App">
-      <Header/>
+      <Header />
       <Routes>
         <Route path="/home" exact element={<Home />} />
         <Route path="/login" exact element={<AuthPage />} />
         <Route path="/docList" exact element={<DoctorList />}/>
       </Routes>
-      <Footer />
+      
     </div>
   );
 }
