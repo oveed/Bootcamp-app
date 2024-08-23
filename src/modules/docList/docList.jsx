@@ -58,6 +58,7 @@ function DoctorList() {
           name(doctor),
           < DoctorCard
             key={doctor.id}
+            id={doctor.id}
             age={doctor.age}
             name={doctor.name}
             specialization={doctor.specialization}

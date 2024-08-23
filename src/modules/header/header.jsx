@@ -6,6 +6,8 @@ import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 
 
 function Header() {
+  const user = UserData();
+  console.log("user", user);
   const handleSignOut = () => {
     const auth = getAuth();
     signOut(auth)

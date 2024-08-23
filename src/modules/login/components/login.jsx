@@ -5,7 +5,7 @@ import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore'; // Fi
 import { onAuthStateChanged, getIdToken } from 'firebase/auth';
 import { UserData } from '../../../utils/userData';
 import { useNavigate } from "react-router-dom";
-import './login.css'; 
+import './login.css';
 
 const AuthPage = () => {
     const [email, setEmail] = useState('');
@@ -39,6 +39,7 @@ const AuthPage = () => {
                         age: age,
                         specialty: specialty,
                         description: description || '',
+                        id: userCredential.user.uid,
                         createdAt: serverTimestamp(),
                     });
 
@@ -121,30 +122,73 @@ const AuthPage = () => {
                     />
                 </div>
                 {isRegistering && (
-                    <div>
-                        <label>Role</label>
+                    <>
                         <div>
-                            <label>
+                            <div>
+                                <label>Full Name</label>
                                 <input
-                                    type="radio"
-                                    value="patient"
-                                    checked={role === 'patient'}
-                                    onChange={(e) => setRole(e.target.value)}
+                                    type="text"
+                                    value={fullName}
+                                    onChange={(e) => setFullName(e.target.value)}
+                                    required
                                 />
-                                Patient
-                            </label>
-                            <label>
-                                <input
-                                    type="radio"
-                                    value="doctor"
-                                    checked={role === 'doctor'}
-                                    onChange={(e) => setRole(e.target.value)}
-                                />
-                                Doctor
-                            </label>
+                            </div>
+                            <label>Role</label>
+                            <div>
+                                <label>
+                                    <input
+                                        type="radio"
+                                        value="patient"
+                                        checked={role === 'patient'}
+                                        onChange={(e) => setRole(e.target.value)}
+                                    />
+                                    Patient
+                                </label>
+                                <label>
+                                    <input
+                                        type="radio"
+                                        value="doctor"
+                                        checked={role === 'doctor'}
+                                        onChange={(e) => setRole(e.target.value)}
+                                    />
+                                    Doctor
+                                </label>
+                            </div>
                         </div>
-                    </div>
+
+                        {role === 'doctor' && (
+                            <>
+
+                                <div>
+                                    <label>Age</label>
+                                    <input
+                                        type="number"
+                                        value={age}
+                                        onChange={(e) => setAge(e.target.value)}
+                                        required
+                                    />
+                                </div>
+                                <div>
+                                    <label>Specialty</label>
+                                    <input
+                                        type="text"
+                                        value={specialty}
+                                        onChange={(e) => setSpecialty(e.target.value)}
+                                        required
+                                    />
+                                </div>
+                                <div>
+                                    <label>Description (optional)</label>
+                                    <textarea
+                                        value={description}
+                                        onChange={(e) => setDescription(e.target.value)}
+                                    />
+                                </div>
+                            </>
+                        )}
+                    </>
                 )}
+
                 <button type="submit">
                     {isRegistering ? 'Register' : 'Login'}
                 </button>
