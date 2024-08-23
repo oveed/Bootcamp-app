@@ -93,7 +93,6 @@ const UserAppointments = () => {
     return (
         <div className='user-appointments'>
             <h3>Your Appointments</h3>
-            <br />
             <ul>
                 {appointments.map(appointment => (
                     <li key={appointment.id}>

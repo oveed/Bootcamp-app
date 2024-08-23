@@ -62,7 +62,7 @@ const DoctorProfile = ({ doctorId }) => {
           </ul>
         </div>
 
-        <button className="appointment-button" onClick={handleOnClick}>Take an Appointment</button>
+        <button className="appointment-button" onClick={handleOnClick}>Book an Appointment</button>
       </div>
     </div>
   );

@@ -14,8 +14,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import "../reservation.css"
 const RESOURCES = [
     { id: 'a', title: 'Auditorium A' },
-    { id: 'b', title: 'Auditorium B', eventColor: 'green' },
-    { id: 'c', title: 'Auditorium C', eventColor: 'orange' },
 ];
 
 function generateGoogleMeetLink() {
@@ -84,7 +82,7 @@ export default class DemoApp extends React.Component {
                         eventsSet={this.handleEvents}
                         slotMinTime="07:00:00"
                         slotMaxTime="21:00:00"
-                        height="auto"
+                        height="300px"
                     />
                 </div>
             </div>
@@ -94,7 +92,6 @@ export default class DemoApp extends React.Component {
     renderSidebar() {
         return (
             <div className='demo-app-sidebar'>
-
             </div>
         );
     }
@@ -104,7 +101,6 @@ export default class DemoApp extends React.Component {
             weekendsVisible: !this.state.weekendsVisible
         });
     };
-
 
     handleDateSelect = async (selectInfo) => {
         const overlappingEvent = this.state.currentApps.find(event => {
@@ -129,7 +125,6 @@ export default class DemoApp extends React.Component {
             end: selectInfo.endStr,
             allDay: selectInfo.allDay,
             resourceId: selectInfo.resource ? selectInfo.resource.id : null,
-
         };
 
         const AppToStore = {
@@ -160,7 +155,6 @@ export default class DemoApp extends React.Component {
                 clickInfo.event.remove();
 
                 try {
-                    // Remove the event from Firestore
                     await deleteDoc(doc(db, "appointments", eventId));
                     toast.success('Appointment deleted successfully.');
                 } catch (e) {
@@ -199,10 +193,10 @@ export default class DemoApp extends React.Component {
 function renderEventContent(eventInfo, isDoctor) {
     const isPatient = !isDoctor;
     return (
-        <>
+        <div className="fc-event-filled">
             <b style={{ opacity: isPatient ? '0.5' : '1' }}>{eventInfo.timeText}</b>
             {" "}<i style={{ opacity: isPatient ? '0.5' : '1' }}>{'    '} {isPatient ? '' : eventInfo.event.title}</i>
-        </>
+        </div>
     );
 }
 

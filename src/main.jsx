@@ -7,10 +7,12 @@ import { Provider } from "react-redux";
 import App from './App.jsx'
 import './index.css'
 import UserStore from './core/UserStore.js';
+import AuthStore from './core/AuthStore.js';
 
 const store = configureStore({
   reducer: {
-    userStore: UserStore
+    userStore: UserStore,
+    authStore: AuthStore
   },
 });
 
