@@ -3,6 +3,8 @@
     padding: 20px;
     text-align: center;
     border-top: 1px solid #e1e1e1;
+    height: 20%;
+    color: #346a74;
   }
   
   .footer-content {
@@ -22,7 +24,7 @@
   
   .footer-links a {
     text-decoration: none;
-    color: #007bff;
+    color: #346a74;
   }
   
   .footer-links a:hover {
@@ -34,13 +36,19 @@
   }
   
   .social-media a {
-    color: #007bff;
+    color: #346a74;
     margin: 0 10px;
     text-decoration: none;
-    font-size: 20px;
+    font-size: 30px;
+    margin: 15px;
+    
   }
   
   .social-media a:hover {
-    color: #0056b3;
+    color: #57a5b3;
   }
   
+  .para{
+    font-size: 20px;
+    letter-spacing: 2px;
+  }

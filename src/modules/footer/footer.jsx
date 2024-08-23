@@ -6,7 +6,7 @@ function Footer() {
   return (
     <footer className="footer">
       <div className="footer-content">
-        <p>&copy; 2024 TherapyHub. All rights reserved.</p>
+        <p className='para'>&copy; 2024 TherapyHub. All rights reserved.</p>
         <div className="social-media">
           <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
             <i className="fab fa-facebook-f"></i>

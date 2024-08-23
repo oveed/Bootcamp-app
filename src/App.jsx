@@ -19,7 +19,7 @@ function App() {
         <Route path="/login" exact element={<AuthPage />} />
         <Route path="/docList" exact element={<DoctorList />}/>
       </Routes>
-      
+      <Footer />
     </div>
   );
 }

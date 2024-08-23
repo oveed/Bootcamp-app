@@ -55,7 +55,7 @@
   padding: 10px 16px;
   font-size: 1rem;
   color: #fff;
-  background-color: #007bff;
+  background-color: #e55b48;
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -64,5 +64,5 @@
 }
 
 .doctor-button:hover {
-  background-color: #0056b3;
+  background-color: #d0331e;
 }
