@@ -42,15 +42,15 @@ const Contact = () => {
 
           <div className="info">
             <div className="information">
-              <img src={locationImg} className="icon" alt="" />
+              <i class="fa-solid fa-location-dot"></i>
               <p>Tunis, Tunisia</p>
             </div>
             <div className="information">
-              <img src={mailImg} className="icon" alt="" />
-              <p>contact@therapy.com</p>
+              <i class="fa-solid fa-envelope"></i>
+              <p>contact@therapyhub.com</p>
             </div>
             <div className="information">
-              <img src={phoneImg} className="icon" alt="" />
+              <i class="fa-solid fa-phone"></i>
               <p>+216 70 546 785</p>
             </div>
           </div>

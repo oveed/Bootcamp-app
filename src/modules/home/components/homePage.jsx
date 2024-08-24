@@ -33,8 +33,10 @@ function HomePage() {
       </section>
 
       <section className="about">
+        <div className='about-content'>
         <h2>About Us</h2>
         <p>TherapyHub is dedicated to providing accessible mental health support and resources. Our team of experienced professionals is here to help you on your journey to well-being.</p>
+        </div>
       </section>
 
     </div>

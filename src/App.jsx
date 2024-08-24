@@ -39,6 +39,8 @@ function App() {
   return (
     <div className="App">
       <Header />
+      <div className='main-content'>
+   
       <Routes>
         <Route path="/home" exact element={<Home />} />
         <Route path="/login" exact element={<AuthPage />} />
@@ -56,6 +58,7 @@ function App() {
         <Route path="/reservation/:id" exact element={<PrivateRoute><ReservationPage /></PrivateRoute>} />
       </Routes>
       <ChatBot />
+      </div>
       <Footer />
     </div>
   );
