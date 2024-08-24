@@ -13,6 +13,14 @@
   z-index: 1000;
 }
 
+.header-content nav ul li a {
+  font-size: 1.1rem;
+}
+
+.logo {
+  font-size: 1.3rem !important;
+}
+
 .header-content {
   margin-top: 80px;
   

@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import { FaUserCircle } from 'react-icons/fa'; // Import FontAwesome user icon
 import './header.css';
+import { useSelector } from 'react-redux';
+import { UserData } from '../../utils/userData';
 
 function Header() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -12,13 +14,13 @@ function Header() {
     signOut(auth)
       .then(() => {
         setIsLoggedIn(false);
- 
+
       })
       .catch((error) => {
         console.error('Sign out error:', error);
       });
   };
-
+  const { isDoctor } = useSelector((store) => store.userStore);
   useEffect(() => {
     const auth = getAuth();
 
@@ -32,7 +34,9 @@ function Header() {
 
     return () => unsubscribe(); // Clean up the listener on unmount
   }, []);
-
+  const user = UserData()
+  const id = user?.uid
+  console.log("idddddddddddddddddddddddddddddddddddddddddddddd", id)
   return (
     <header className="header">
       <div className="header-content">
@@ -42,13 +46,18 @@ function Header() {
             <li><Link to="/home">Home</Link></li>
             <li><Link to="/docList">Doctors List</Link></li>
             <li><Link to="/contact">Contact</Link></li>
+            {isDoctor ? (
+              <li><Link to={`/reservation/${id}}`}>Calendar</Link></li>
+            ) : (
+              null
+            )}
             {isLoggedIn ? (
               <>
-                <li>
-                  <Link to="/profile">
-                  <i class="fa-solid fa-user"></i>
-                  </Link>
-                </li>
+                {isDoctor ? (
+                  <li><Link to={`/profile/${id}`}><i class="fa-solid fa-user"></i></Link></li>
+                ) : (
+                  <li><Link to={`/profile`}><i class="fa-solid fa-user"></i></Link></li>
+                )}
                 <li>
                   <Link to="/home" onClick={handleSignOut}>Log out</Link>
                 </li>
