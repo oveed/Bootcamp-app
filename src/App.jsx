@@ -40,24 +40,24 @@ function App() {
     <div className="App">
       <Header />
       <div className='main-content'>
-   
-      <Routes>
-        <Route path="/home" exact element={<Home />} />
-        <Route path="/login" exact element={<AuthPage />} />
-        <Route path="/signup" exact element={<SignUpForm />} />
-        <Route path="/contact" exact element={<Contact />} />
-        <Route path="/profile" exact element={<UserProfile />} />
-        {/* <Route path="/profile" exact element={<PrivateRoute>
+
+        <Routes>
+          <Route path="/" exact element={<Home />} />
+          <Route path="/login" exact element={<AuthPage />} />
+          <Route path="/signup" exact element={<SignUpForm />} />
+          <Route path="/contact" exact element={<Contact />} />
+          <Route path="/profile" exact element={<UserProfile />} />
+          {/* <Route path="/profile" exact element={<PrivateRoute>
           <ProfilePage />
         </PrivateRoute>} /> */}
-        <Route path="/calendar" exact element={<PrivateRoute>
-          <CalendarPage />
-        </PrivateRoute>} />
-        <Route path="/docList" exact element={<PrivateRoute><DoctorList /></PrivateRoute>} />
-        <Route path="/profile/:id" exact element={<PrivateRoute><DocProfilePage /></PrivateRoute>} />
-        <Route path="/reservation/:id" exact element={<PrivateRoute><ReservationPage /></PrivateRoute>} />
-      </Routes>
-      <ChatBot />
+          <Route path="/calendar" exact element={<PrivateRoute>
+            <CalendarPage />
+          </PrivateRoute>} />
+          <Route path="/docList" exact element={<PrivateRoute><DoctorList /></PrivateRoute>} />
+          <Route path="/profile/:id" exact element={<PrivateRoute><DocProfilePage /></PrivateRoute>} />
+          <Route path="/reservation/:id" exact element={<PrivateRoute><ReservationPage /></PrivateRoute>} />
+        </Routes>
+        <ChatBot />
       </div>
       <Footer />
     </div>

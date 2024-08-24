@@ -140,7 +140,7 @@ const SignUpForm = () => {
         uid: userId,
       }));
       await signInWithEmailAndPassword(auth, formData.email, formData.password);
-      navigate("/home");
+      navigate("/");
     } catch (error) {
       console.error('Error during sign up: ', error);
     }

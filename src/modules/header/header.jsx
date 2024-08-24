@@ -43,7 +43,7 @@ function Header() {
         <h1 className="logo">TherapyHub</h1>
         <nav className="nav">
           <ul>
-            <li><Link to="/home">Home</Link></li>
+            <li><Link to="/">Home</Link></li>
             <li><Link to="/docList">Doctors List</Link></li>
             <li><Link to="/contact">Contact</Link></li>
             {isDoctor ? (
@@ -59,7 +59,7 @@ function Header() {
                   <li><Link to={`/profile`}><i class="fa-solid fa-user"></i></Link></li>
                 )}
                 <li>
-                  <Link to="/home" onClick={handleSignOut}>Log out</Link>
+                  <Link to="/" onClick={handleSignOut}>Log out</Link>
                 </li>
               </>
             ) : (
