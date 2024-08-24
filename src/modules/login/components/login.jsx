@@ -58,7 +58,7 @@ const AuthPage = () => {
                 localStorage.setItem('user', JSON.stringify({ ...userData, uid: userCredential.user.uid }));
 
                 alert("User registered successfully");
-                navigate("/home");
+                navigate("/");
             } else {
                 userCredential = await signInWithEmailAndPassword(auth, email, password);
 
@@ -71,7 +71,7 @@ const AuthPage = () => {
 
                         uid: userCredential.user.uid,
                     }));
-                    navigate("/home");
+                    navigate("/");
                 } else {
                     alert("No such user found in Firestore");
                 }
@@ -127,7 +127,7 @@ const AuthPage = () => {
                                         required
                                     />
                                 </div>
-                                <button type="submit" disabled={loading}>
+                                <button type="submit" className='login' disabled={loading}>
                                     {loading ? 'Processing...' : 'Login'}
                                 </button>
                             </form>

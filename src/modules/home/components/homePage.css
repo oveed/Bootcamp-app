@@ -82,7 +82,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
   margin: 15px;
-  width: 280px;
+  width: 300px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -106,7 +106,7 @@
 .about {
   padding: 40px 10px;
   text-align: center;
-  height: 50%;
+  height: 30vh;
   margin-top: 0;
   color: #000000;
 }

@@ -193,7 +193,6 @@ function renderEventContent(eventInfo, isDoctor) {
     return (
         <div>
             <b style={{ opacity: isPatient ? '0.5' : '1' }}>{eventInfo.timeText}</b>
-            {" "}<i style={{ opacity: isPatient ? '0.5' : '1' }}>{'    '} {isPatient ? '' : eventInfo.title}</i>
         </div>
     );
 }
