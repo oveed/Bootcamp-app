@@ -45,7 +45,6 @@ const userStore = createSlice({
     },
     extraReducers: (builder) => {
       builder
-
         .addCase(fetchDoctorName.pending, (state) => {
           state.status = 'loading';
         })
