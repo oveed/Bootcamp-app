@@ -127,7 +127,7 @@ const AuthPage = () => {
                                         required
                                     />
                                 </div>
-                                <button type="submit" disabled={loading}>
+                                <button type="submit" className='login' disabled={loading}>
                                     {loading ? 'Processing...' : 'Login'}
                                 </button>
                             </form>
