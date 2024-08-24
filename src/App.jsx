@@ -20,7 +20,7 @@ import { auth } from './utils/firebaseConfig';
 import ReservationPage from './modules/reservation/pages/ReservationPage';
 import DocProfilePage from './modules/profile/doctor/pages/DocProfilePage';
 import SignUpForm from './modules/SignUp/signUp';
-import ChatBot from './modules/chatbot/ChatBot';
+import ChatBot from './modules/chatbot/components/chatBot';
 function App() {
   const { isDoctor } = useSelector((store) => store.userStore);
   const dispatch = useDispatch();
