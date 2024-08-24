@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { doc, onSnapshot } from 'firebase/firestore';
 import { db } from '../../../../utils/firebaseConfig';
-import './DocProfile.css';
+import './docProfile.css';
 import { useNavigate } from 'react-router-dom';
 const DoctorProfile = ({ doctorId }) => {
   const navigate = useNavigate();
