@@ -22,6 +22,7 @@ function ReservationPage() {
     return (
         <div style={{
             margin: "10px",
+            padding: "40px"
         }}>
             <UserAppointments />
             <DoctorName />

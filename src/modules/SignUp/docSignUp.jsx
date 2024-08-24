@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './DocSignUp.css';
+import './docSignUp.css';
 import { FaTrash } from 'react-icons/fa';
 
 const DoctorSignup = () => {

@@ -14,8 +14,9 @@ function DoctorCard({ name, specialization, description, age, id, picture }) {
   }
   return (
     <div className="doctor-card">
-      <img src={picture} alt={`${name}'s picture`} className="doctor-picture" />
+
       <div className="doctor-info">
+        <img src={picture} alt={`${name}'s picture`} className="doctor-picture" />
         <h3 className="doctor-name">{name}</h3>
         <p className="doctor-specialization">{specialization}</p>
         <p className="doctor-age">{age} years old</p>

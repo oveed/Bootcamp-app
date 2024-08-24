@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './DocSignUp.css';
+import './docSignUp.css';
 import { FaTrash } from 'react-icons/fa';
 import { db, auth } from "../../utils/firebaseConfig.js";
 import { doc, setDoc } from "firebase/firestore";

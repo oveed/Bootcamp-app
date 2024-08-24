@@ -1,6 +1,8 @@
 .doctor-list {
     padding: 20px;
     background-color: #f4f4f4;
+    padding-top: 150px;
+    align-content: center;
   }
   
   .doctor-list h2 {
@@ -13,6 +15,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    padding: 20px ;
   }
   
   .doctor-card {
@@ -21,18 +24,25 @@
     margin: 10px;
   }
   .banner {
-    background-color: #2a9244;
-    padding: 30px;
+    background-image: url("./banner.jpg") ;
+    background-size: cover;
+    padding: 60px 20px;
     text-align: center;
     border-radius: 8px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-    margin: 40px 0; /* Spacing above and below the banner */
-    margin-top: 100px;
+    margin: 60px 0; /* Spacing above and below the banner */
+    width: 70%;
+    height: 20%;
+    margin: auto ;
+    margin-bottom: 30px;
+    
+
   }
   
   .banner h2 {
     margin-bottom: 20px;
-    color: #264653;
+    color: #ffffff;
+    font-size: 2em;
   }
   
   .search-input {

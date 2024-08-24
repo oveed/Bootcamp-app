@@ -1,7 +1,7 @@
 import React from 'react';
-import './HomePage.css';
+import './homePage.css';
 import { Link } from 'react-router-dom';
-import bgImg from '../../../assets/bg.png';
+import bgImg from '../../../assets/bg6.jpg';
 function HomePage() {
   return (
     <div className="home-page">
@@ -9,7 +9,7 @@ function HomePage() {
       <div className="hero" style={{ backgroundImage: `url(${bgImg})` }}>
         <div className="hero-content">
           <h1>Welcome to TherapyHub</h1>
-          <p className="quote" >"Taking care of your mental health is just as important as taking care of your physical health."</p>
+          <p className="quote" >“Accessible mental health support, anytime, anywhere”</p>
           <Link to="/login" className="cta-button">Get In Touch</Link>
         </div>
       </div>
